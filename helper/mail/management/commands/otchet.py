@@ -1,4 +1,5 @@
 import psycopg2
+from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
 load_dotenv()
 import os
