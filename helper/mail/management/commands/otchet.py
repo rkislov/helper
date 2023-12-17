@@ -38,7 +38,7 @@ class Command(BaseCommand):
                             LIMIT 1000
                     """
                     )
-        row = cursor.fetchall()
+        row = cursor.fetch()
         cursor.close()
         connect.close()
         print(row)
