@@ -38,7 +38,8 @@ class Command(BaseCommand):
                             LIMIT 1000
                     """
                     )
-        row = cursor.fetchmany()
+        row = cursor.fetchall()
+        print("Total rows are:  ", len(row))
         cursor.close()
         connect.close()
-        print(row)
+
