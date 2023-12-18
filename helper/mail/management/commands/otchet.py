@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-    regions = Region.objects.all()
+        regions = Region.objects.all()
 
-    for region in regions:
-        generate_otchet(region)
+        for region in regions:
+            generate_otchet(region)
