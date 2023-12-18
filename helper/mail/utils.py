@@ -68,15 +68,17 @@ def generate_otchet(region_number):
     #    csv_writer.writerow(fields)
     format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
+        datetime = f"{ro[5]}"
+        print(datetime)
         worksheet.write(row, col, ro[0])
         worksheet.write(row, col + 1, ro[1])
         worksheet.write(row, col + 2, ro[3])
         worksheet.write(row, col + 3, ro[4])
-        worksheet.write_datetime(row, col + 4, ro[5])
+        worksheet.write_datetime(row, col + 4, ro[5], format1)
         worksheet.write(row, col + 5, ro[6])
         worksheet.write(row, col + 6, ro[7])
         row += 1
         col = 0
     worksheet.autofit()
     workbook.close()
-    send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
+    #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
