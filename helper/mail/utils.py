@@ -53,7 +53,7 @@ def generate_otchet(region_number):
 
     #print(row[0])
     #print(row[1])
-    workbook = xlsxwriter.Workbook(django_settings.STATIC_ROOT, f'{filename}')
+    workbook = xlsxwriter.Workbook(f'{filename}')
     worksheet = workbook.add_worksheet()
     row = 0
     col = 0
