@@ -69,14 +69,12 @@ def generate_otchet(region_number):
     format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
         worksheet.write(row, col, ro[0])
-        worksheet.write(row, col+1, ro[1])
-        worksheet.write(row, col+2, ro[3])
-        worksheet.write(row, col+3, ro[4])
-        worksheet.write(row, col+4, ro[5], format1)
-        worksheet.write(row, col+5, ro[6])
-        worksheet.write(row, col+6, ro[7])
-
-
+        worksheet.write(row, col + 1, ro[1])
+        worksheet.write(row, col + 2, ro[3])
+        worksheet.write(row, col + 3, ro[4])
+        worksheet.write_datetime(row, col + 4, ro[5])
+        worksheet.write(row, col + 5, ro[6])
+        worksheet.write(row, col + 6, ro[7])
         row += 1
         col = 0
     worksheet.autofit()
