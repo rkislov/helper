@@ -73,10 +73,11 @@ def generate_otchet(region_number):
         #print(date_time)
         worksheet.write(row, col, ro[0])
         worksheet.write(row, col + 1, ro[1])
-        worksheet.write(row, col + 2, ro[3])
-        worksheet.write(row, col + 3, ro[4])
-        worksheet.write(row, col + 4, date_time)
-        worksheet.write(row, col + 5, ro[6])
+        worksheet.write(row, col + 2, ro[2])
+        worksheet.write(row, col + 3, ro[3])
+        worksheet.write(row, col + 4, ro[4])
+        worksheet.write(row, col + 5, date_time)
+        worksheet.write(row, col + 6, ro[6])
         worksheet.write(row, col + 6, ro[7])
         row += 1
         col = 0
