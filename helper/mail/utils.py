@@ -49,7 +49,7 @@ def generate_otchet(region_number):
                        """
                    )
     row = cursor.fetchall()
-    #print("Total rows are:  ", len(row))
+    print("Total rows are:  ", len(row))
 
     #print(row[0])
     #print(row[1])
@@ -61,4 +61,4 @@ def generate_otchet(region_number):
         for ro in row:
             csv_writer.writerow(list(ro))
 
-    send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
+    #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
