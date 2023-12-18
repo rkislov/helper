@@ -41,12 +41,12 @@ def generate_otchet(region_number):
                                 join public.queue q on t.queue_id = q.id 
 
                                WHERE   
-                                c.lvl2 LIKE '%78%' AND c.lvl3 LIKE '%78%' -- номер региона 
+                                c.lvl2 LIKE (%s) AND c.lvl3 LIKE (%s) -- номер региона 
                                 AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые 
 
                                ORDER BY t.id DESC  
                                LIMIT 1000
-                       """
+                       """, (region.region_number, region.region_number)
                    )
     row = cursor.fetchall()
     print("Total rows are:  ", len(row))
