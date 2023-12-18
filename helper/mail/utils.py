@@ -58,7 +58,7 @@ def generate_otchet(region_number):
     row = 0
     col = 0
     for f in fields:
-        worksheet.write(row, col, fields)
+        worksheet.write(row, col, f)
         col +=1
     row += 1
     col = 0
