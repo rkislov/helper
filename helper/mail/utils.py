@@ -55,10 +55,11 @@ def generate_otchet(region_number):
     #print(row[1])
     workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet()
+    bold = workbook.add_format({'bold': True})
     row = 0
     col = 0
     for f in fields:
-        worksheet.write(row, col, f)
+        worksheet.write(row, col, f, bold)
         col +=1
     row += 1
     col = 0
@@ -66,7 +67,7 @@ def generate_otchet(region_number):
     #with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
     #    csv_writer = csv.writer(f)
     #    csv_writer.writerow(fields)
-    format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
+    #format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
         date_time = f"{ro[5]}"
         #print(date_time)
@@ -74,7 +75,7 @@ def generate_otchet(region_number):
         worksheet.write(row, col + 1, ro[1])
         worksheet.write(row, col + 2, ro[3])
         worksheet.write(row, col + 3, ro[4])
-        worksheet.write_datetime(row, col + 4, date_time)
+        worksheet.write_datetime(row, col + 4, print(date_time))
         worksheet.write(row, col + 5, ro[6])
         worksheet.write(row, col + 6, ro[7])
         row += 1
