@@ -68,8 +68,8 @@ def generate_otchet(region_number):
     #    csv_writer.writerow(fields)
     format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
-        datetime = f"{ro[5]}"
-        print(datetime)
+        date_time = f"{ro[5]}"
+        print(date_time)
         worksheet.write(row, col, ro[0])
         worksheet.write(row, col + 1, ro[1])
         worksheet.write(row, col + 2, ro[3])
