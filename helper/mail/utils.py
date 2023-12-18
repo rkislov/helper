@@ -19,7 +19,7 @@ def generate_otchet(region_number):
     filename = f"region-{region_number}-{datetime.date.today().isoformat()}.csv"
     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
     message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
-    fields = ['Номер заявки', 'Тема заявки', 'ИКСРФ/ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус', 'Сервис',
+    fields = ['Номер заявки', 'Тема заявки', 'ИКСРФ/ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус',
               'линия ТП']
     search_region = f"%{region.region_number}%"
     print(search_region)
