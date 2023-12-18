@@ -66,10 +66,17 @@ def generate_otchet(region_number):
     #with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
     #    csv_writer = csv.writer(f)
     #    csv_writer.writerow(fields)
+    format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
-        for r in list(ro):
-            worksheet.write(row, col, r)
-            col += 1
+        worksheet.write(row, col, ro[0])
+        worksheet.write(row, col+1, ro[1])
+        worksheet.write(row, col+2, ro[3])
+        worksheet.write(row, col+3, ro[4])
+        worksheet.write(row, col+4, ro[5], format1)
+        worksheet.write(row, col+5, ro[6])
+        worksheet.write(row, col+6, ro[7])
+
+
         row += 1
         col = 0
     worksheet.autofit()
