@@ -32,3 +32,4 @@ def send_otchet_email_task(email_address, subject, from_email, message, filename
     )
     email.attach(file_name, file_content, mime_type)
     email.send()
+    print(f"отчет {filename} направлен на email {email_address}")
