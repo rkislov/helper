@@ -50,10 +50,10 @@ def generate_otchet(region_number):
                        """
                    )
     row = cursor.fetchall()
-    print("Total rows are:  ", len(row))
+    #print("Total rows are:  ", len(row))
 
-    print(row[0])
-    print(row[1])
+    #print(row[0])
+    #print(row[1])
 
     # print(tuple_to_list(row))
     with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
