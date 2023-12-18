@@ -46,12 +46,13 @@ class Command(BaseCommand):
         row = cursor.fetchall()
         print("Total rows are:  ", len(row))
 
-        print(row[0][0])
-        with open(os.path.join(django_settings.STATIC_ROOT,f'{filename}'), 'w') as f:
-            csv_writer = csv.writer(f)
-            csv_writer.writerow(fields)
-            for ro in row:
-                csv_writer.writerow(ro[2], ro[0], ro[3], ro[5], ro[7], ro[7], ro[6])
+        print(row[0])
+        print(row[1])
+        # with open(os.path.join(django_settings.STATIC_ROOT,f'{filename}'), 'w') as f:
+        #     csv_writer = csv.writer(f)
+        #     csv_writer.writerow(fields)
+        #     for ro in row:
+        #         csv_writer.writerow(ro[2], ro[0], ro[3], ro[5], ro[7], ro[7], ro[6])
 
 
         cursor.close()
