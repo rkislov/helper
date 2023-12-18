@@ -69,7 +69,7 @@ def generate_otchet(region_number):
     format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
         date_time = f"{ro[5]}"
-        print(date_time)
+        #print(date_time)
         worksheet.write(row, col, ro[0])
         worksheet.write(row, col + 1, ro[1])
         worksheet.write(row, col + 2, ro[3])
@@ -81,4 +81,4 @@ def generate_otchet(region_number):
         col = 0
     worksheet.autofit()
     workbook.close()
-    #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
