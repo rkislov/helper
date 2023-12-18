@@ -46,8 +46,7 @@ def generate_otchet(region_number):
 
                                ORDER BY t.id DESC  
                                LIMIT 1000
-                       """, (78, 78)
-                   )
+                       """, ("78", "78"))
     row = cursor.fetchall()
     print("Total rows are:  ", len(row))
 
