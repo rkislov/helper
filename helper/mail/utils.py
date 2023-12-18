@@ -67,8 +67,8 @@ def generate_otchet(region_number):
     #    csv_writer = csv.writer(f)
     #    csv_writer.writerow(fields)
     for ro in rows:
-        for r in ro:
-            worksheet.writer(row, col, r)
+        for r in list(ro):
+            worksheet.write(row, col, r)
             col += 1
         row += 1
 
