@@ -71,5 +71,6 @@ def generate_otchet(region_number):
             worksheet.write(row, col, r)
             col += 1
         row += 1
+        col = 0
     workbook.close()
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
