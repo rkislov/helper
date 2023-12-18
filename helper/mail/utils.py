@@ -62,4 +62,4 @@ def generate_otchet(region_number):
         for ro in row:
             csv_writer.writerow(list(ro))
 
-    send_otchet_email_task.delay(region.region_admin_email, subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
