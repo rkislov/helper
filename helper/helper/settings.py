@@ -155,4 +155,8 @@ CELERY_BEAT_SCHEDULE = {
         "task": "helper.tasks.check_email",
         "schedule": crontab(minute="*/1"),
     },
+    "sample_task2": {
+        "task": "helper.tasks.create_otchet",
+        "schedule": crontab(minute="0", hour="21"),
+    },
 }

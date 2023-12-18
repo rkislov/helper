@@ -15,6 +15,11 @@ def check_email():
     call_command("mailcheck", )
 
 
+@shared_task
+def create_otchet():
+    call_command("otchet", )
+
+
 @shared_task()
 def send_otchet_email_task(email_address, subject, from_email, message, filename):
     with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'rb') as file:
