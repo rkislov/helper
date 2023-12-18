@@ -6,7 +6,7 @@ from django.conf import settings as django_settings
 import os
 import csv
 import datetime
-from helper.mail.models import Region
+from mail.models import Region
 from helper.helper.tasks import send_otchet_email_task
 
 

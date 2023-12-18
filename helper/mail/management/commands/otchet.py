@@ -7,6 +7,7 @@ import os
 import csv
 import datetime
 from mail.models import Region
+from helper.mail.utils import send_otchet_email_task
 
 
 class Command(BaseCommand):
@@ -63,4 +64,4 @@ class Command(BaseCommand):
     regions = Region.objects.all()
 
     for region in regions:
-        print(region.region_number)
+        send_otchet_email_task(region)
