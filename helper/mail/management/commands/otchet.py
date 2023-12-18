@@ -7,7 +7,7 @@ import os
 import csv
 import datetime
 from mail.models import Region
-from helper.mail.utils import generate_otchet
+from mail.utils import generate_otchet
 
 
 class Command(BaseCommand):
