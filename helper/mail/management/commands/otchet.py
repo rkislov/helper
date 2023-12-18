@@ -17,7 +17,7 @@ class Command(BaseCommand):
         connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"), password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"), port=os.getenv("DBE_PORT"))
 
 
-        filename = f"78.{datetime.date.today().isoformat()}.csv"
+        filename = f"region-78-{datetime.date.today().isoformat()}.csv"
         fields = ['ТИК', 'Номер заявки', 'ФИО Заявителя', 'Дата', 'СПО', 'линия ТП', 'Статус']
         cursor = connect.cursor()
         cursor.execute("""SELECT   
