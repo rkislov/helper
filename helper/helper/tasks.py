@@ -28,7 +28,7 @@ def send_otchet_email_task(email_address, subject, from_email, message, filename
         {subject},
         {message},
         {from_email},
-        [email_address],
+        list(email_address),
     )
     email.attach(file_name, file_content, mime_type)
     email.send()
