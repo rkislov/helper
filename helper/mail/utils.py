@@ -57,14 +57,19 @@ def generate_otchet(region_number):
     worksheet = workbook.add_worksheet()
     row = 0
     col = 0
-    worksheet.write(row, col, fields)
+    for f in fields:
+        worksheet.write(row, col, fields)
+        col +=1
     row += 1
+    col = 0
     # print(tuple_to_list(row))
     #with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
     #    csv_writer = csv.writer(f)
     #    csv_writer.writerow(fields)
     for ro in rows:
-        worksheet.writer(row, col, ro)
+        for r in ro:
+            worksheet.writer(row, col, r)
+            col += 1
         row += 1
 
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
