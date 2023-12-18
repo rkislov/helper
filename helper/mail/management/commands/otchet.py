@@ -56,7 +56,8 @@ class Command(BaseCommand):
         with open(os.path.join(django_settings.STATIC_ROOT,f'{filename}'), 'w') as f:
              csv_writer = csv.writer(f)
              csv_writer.writerow(fields)
-             csv_writer.writerow(tuple_to_list(row))
+             for ro in row:
+                csv_writer.writerow(list(ro))
 
         cursor.close()
         connect.close()
