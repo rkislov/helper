@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
 
         filename = f"region-78-{datetime.date.today().isoformat()}.csv"
-        fields = ['ТИК', 'Номер заявки', 'ФИО Заявителя', 'Дата', 'СПО', 'линия ТП', 'Статус']
+        fields = ['Номер заявки', 'Заявитель', 'ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус', 'СПО', 'линия ТП']
         cursor = connect.cursor()
         cursor.execute("""SELECT   
                              t.tn, 
