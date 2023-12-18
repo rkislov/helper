@@ -17,7 +17,7 @@ class Command(BaseCommand):
         connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"), password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"), port=os.getenv("DBE_PORT"))
 
 
-        filename = print(f"78.{datetime.date.today().isoformat()}.csv")
+        filename = f"78.{datetime.date.today().isoformat()}.csv"
         fields = ['ТИК', 'Номер заявки', 'ФИО Заявителя', 'Дата', 'СПО', 'линия ТП', 'Статус']
         cursor = connect.cursor()
         cursor.execute("""SELECT   
@@ -52,7 +52,7 @@ class Command(BaseCommand):
         print(row[0])
         print(row[1])
 
-        print(tuple_to_list(row))
+        #print(tuple_to_list(row))
         with open(os.path.join(django_settings.STATIC_ROOT,f'{filename}'), 'w') as f:
              csv_writer = csv.writer(f)
              csv_writer.writerow(fields)
