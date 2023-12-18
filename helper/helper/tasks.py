@@ -17,7 +17,7 @@ def check_email():
 
 @shared_task()
 def send_otchet_email_task(email_address, subject, from_email, message, filename):
-    with open( f"{filename}", 'rb') as file:
+    with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'rb') as file:
         file_content = file.read()
 
     mime_type = magic.from_buffer(file_content, mime=True)

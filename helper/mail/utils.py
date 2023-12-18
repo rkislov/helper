@@ -50,10 +50,10 @@ def generate_otchet(region_number):
                        """, (search_region, search_region))
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
-
+    path = os.path.join(django_settings.STATIC_ROOT, f'{filename}')
     #print(row[0])
     #print(row[1])
-    workbook = xlsxwriter.Workbook(f'{filename}')
+    workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet()
     row = 0
     col = 0
