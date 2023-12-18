@@ -41,7 +41,7 @@ class Command(BaseCommand):
         row = cursor.fetchall()
         print("Total rows are:  ", len(row))
 
-        print(row[0])
+        print(row[0][0])
         cursor.close()
         connect.close()
 
