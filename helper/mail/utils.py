@@ -21,6 +21,8 @@ def generate_otchet(region_number):
     message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
     fields = ['Номер заявки', 'Заявитель', 'ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус', 'СПО',
               'линия ТП']
+    search_region = f"%{region.region_number}%"
+    print(search_region)
     cursor = connect.cursor()
     cursor.execute("""SELECT   
                                 t.tn, 
@@ -46,7 +48,7 @@ def generate_otchet(region_number):
 
                                ORDER BY t.id DESC  
                                LIMIT 1000
-                       """, ("%78%", "%78%"))
+                       """, (search_region, search_region))
     row = cursor.fetchall()
     print("Total rows are:  ", len(row))
 
