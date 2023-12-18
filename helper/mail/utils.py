@@ -5,6 +5,7 @@ from django.conf import settings as django_settings
 import os
 import csv
 import datetime
+import xlsxwriter
 from mail.models import Region
 from helper.tasks import send_otchet_email_task
 
@@ -16,7 +17,7 @@ def generate_otchet(region_number):
                                password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
                                port=os.getenv("DBE_PORT"))
 
-    filename = f"region-{region_number}-{datetime.date.today().isoformat()}.csv"
+    filename = f"region-{region_number}-{datetime.date.today().isoformat()}.xlsx"
     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
     message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
     fields = ['Номер заявки', 'Тема заявки', 'ИКСРФ/ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус',
@@ -47,17 +48,23 @@ def generate_otchet(region_number):
                             ORDER BY t.id DESC   
                             LIMIT 1000
                        """, (search_region, search_region))
-    row = cursor.fetchall()
-    print("Total rows are:  ", len(row))
+    rows = cursor.fetchall()
+    print("Total rows are:  ", len(rows))
 
     #print(row[0])
     #print(row[1])
-
+    workbook = xlsxwriter.Workbook(django_settings.STATIC_ROOT, f'{filename}')
+    worksheet = workbook.add_worksheet()
+    row = 0
+    col = 0
+    worksheet.write(row, fields)
+    row += 1
     # print(tuple_to_list(row))
-    with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
-        csv_writer = csv.writer(f)
-        csv_writer.writerow(fields)
-        for ro in row:
-            csv_writer.writerow(list(ro))
+    #with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
+    #    csv_writer = csv.writer(f)
+    #    csv_writer.writerow(fields)
+    for ro in rows:
+        worksheet.writer(row, list(ro))
+        row += 1
 
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
