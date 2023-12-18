@@ -41,7 +41,7 @@ def generate_otchet(region_number):
                                 join public.queue q on t.queue_id = q.id 
 
                                WHERE   
-                                c.lvl2 LIKE '%78%' AND c.lvl3 LIKE '%87%' -- номер региона 
+                                c.lvl2 LIKE '%78%' AND c.lvl3 LIKE '%78%' -- номер региона 
                                 AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые 
 
                                ORDER BY t.id DESC  
@@ -61,4 +61,4 @@ def generate_otchet(region_number):
         for ro in row:
             csv_writer.writerow(list(ro))
 
-    #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
