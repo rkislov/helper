@@ -78,7 +78,7 @@ def generate_otchet(region_number):
         worksheet.write(row, col + 4, ro[4])
         worksheet.write(row, col + 5, date_time)
         worksheet.write(row, col + 6, ro[6])
-        worksheet.write(row, col + 6, ro[7])
+        worksheet.write(row, col + 7, ro[7])
         row += 1
         col = 0
     worksheet.autofit()
