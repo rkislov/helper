@@ -6,7 +6,7 @@ from django.conf import settings as django_settings
 import os
 import csv
 import datetime
-from helper.mail.models import Region
+from mail.models import Region
 
 
 class Command(BaseCommand):
