@@ -2,8 +2,10 @@ import psycopg2
 from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
 load_dotenv()
+from django.conf import settings as django_settings
 import os
-
+import csv
+import datetime
 
 class Command(BaseCommand):
     help = "проверят наличие новых заявок в ОТРС"
@@ -11,6 +13,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"), password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"), port=os.getenv("DBE_PORT"))
 
+
+        filename = print(f"78.{datetime.date.today().isoformat()}.csv")
+        fields = ['ТИК', 'Номер заявки', 'ФИО Заявителя', 'Дата', 'СПО', 'линия ТП', 'Статус']
         cursor = connect.cursor()
         cursor.execute("""SELECT   
                              t.tn, 
@@ -42,6 +47,13 @@ class Command(BaseCommand):
         print("Total rows are:  ", len(row))
 
         print(row[0][0])
+        with open(os.path.join(django_settings.STATIC_ROOT,f'{filename}'), 'w') as f:
+            csv_writer = csv.writer(f)
+            csv_writer.writerow(fields)
+            for ro in row:
+                csv_writer.writerow(ro[2], ro[0], ro[3], ro[5], ro[7], ro[7], ro[6])
+
+
         cursor.close()
         connect.close()
 
