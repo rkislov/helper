@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     )
         row = cursor.fetchall()
         print("Total rows are:  ", len(row))
-        rows = cursor.fetcone()
+        rows = cursor.fetchone()
         print(rows)
         cursor.close()
         connect.close()
