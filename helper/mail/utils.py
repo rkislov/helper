@@ -7,7 +7,7 @@ import os
 import csv
 import datetime
 from mail.models import Region
-from helper.helper.tasks import send_otchet_email_task
+from helper.tasks import send_otchet_email_task
 
 
 def generate_otchet(region_number):
