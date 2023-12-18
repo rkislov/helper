@@ -1,5 +1,4 @@
 import psycopg2
-from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
 load_dotenv()
 from django.conf import settings as django_settings
