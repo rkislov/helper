@@ -43,8 +43,7 @@ E-mail:  supportcp@cloud.rt.ru
                  t.create_time,    
                  ts.comments AS "ticket_state",    
                  q.name AS "queue",  
-                 (  
-                    SELECT  
+                 (SELECT  
                      a.a_body  
                     FROM  
                      report.v_fact_article a 
