@@ -19,7 +19,17 @@ def generate_otchet(region_number):
 
     filename = f"region-{region_number}-{datetime.date.today().isoformat()}.xlsx"
     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
-    message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
+    #message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
+    message = f"""
+    Добрый день.
+
+    Во вложении отчет по заявкам по региону №{region_number}  на {datetime.date.today().isoformat()} 
+    
+    
+    Служба поддержки ЦП
+    Телефон: 8-800-301-23-39 
+    E-mail:  supportcp@cloud.rt.ru
+    """
     fields = ['Номер заявки', 'Тема заявки', 'ИКСРФ/ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус',
               'линия ТП']
     search_region = f"%{region.region_number}%"
