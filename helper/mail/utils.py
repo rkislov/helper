@@ -44,19 +44,19 @@ E-mail:  supportcp@cloud.rt.ru
                  ts.comments AS "ticket_state",    
                  q.name AS "queue",  
                  (  
-                SELECT  
-                 a.a_body  
-                FROM  
-                 report.v_fact_article a 
-                WHERE  
-                 a.ticket_id = t.id 
-                 AND a.article_type <> 'SystemNote' 
-                 AND a.is_visible_for_customer = 1 
-                 AND a.article_sender_type = 'agent' 
-                 AND a.a_body NOT LIKE '%->%' 
-                  
-                ORDER BY a.id DESC  
-                LIMIT 1  
+                    SELECT  
+                     a.a_body  
+                    FROM  
+                     report.v_fact_article a 
+                    WHERE  
+                     a.ticket_id = t.id 
+                     AND a.article_type <> 'SystemNote' 
+                     AND a.is_visible_for_customer = 1 
+                     AND a.article_sender_type = 'agent' 
+                     AND a.a_body NOT LIKE '%->%' 
+                      
+                    ORDER BY a.id DESC  
+                    LIMIT 1  
                  ) AS "comment"  
                      
                 FROM      
@@ -103,6 +103,7 @@ E-mail:  supportcp@cloud.rt.ru
         worksheet.write(row, col + 5, date_time)
         worksheet.write(row, col + 6, ro[6])
         worksheet.write(row, col + 7, ro[7])
+        worksheet.write(row, col + 8, ro[8])
         row += 1
         col = 0
     worksheet.autofit()
