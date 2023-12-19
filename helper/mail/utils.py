@@ -20,8 +20,7 @@ def generate_otchet(region_number):
     filename = f"region-{region_number}-{datetime.date.today().isoformat()}.xlsx"
     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
     #message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
-    message = f"""
-Добрый день.
+    message = f"""Добрый день.
 
 Во вложении отчет по заявкам по региону №{region_number}  на {datetime.date.today().isoformat()} 
     
