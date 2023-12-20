@@ -75,11 +75,12 @@ E-mail:  supportcp@cloud.rt.ru
     #print(row[1])
     workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet()
-    bold = workbook.add_format({'bold': True})
+    format1 = workbook.add_format({'bg_color': '#D9D9D9', 'bold': True})
+    #bold = workbook.add_format({'bold': True})
     row = 0
     col = 0
     for f in fields:
-        worksheet.write(row, col, f, bold)
+        worksheet.write(row, col, f, format1)
         col +=1
     row += 1
     col = 0
@@ -104,6 +105,7 @@ E-mail:  supportcp@cloud.rt.ru
         col = 0
     worksheet.autofit()
     worksheet.freeze_panes(1, 0)
+    worksheet.autofilter(0, 0, 1000, 8)
     worksheet.set_default_row(30)
     workbook.close()
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
