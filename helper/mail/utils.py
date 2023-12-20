@@ -32,8 +32,9 @@ E-mail:  supportcp@cloud.rt.ru
               'линия ТП', 'Комментарий']
     search_region = f"%{region.region_number}%"
     print(search_region)
+
     cursor = connect.cursor()
-    cursor.execute("""
+    sql=f"""
    SELECT 
    t.tn,  
    t.title,  
@@ -59,11 +60,11 @@ E-mail:  supportcp@cloud.rt.ru
    join public.ticket_state ts on t.ticket_state_id = ts.id  
    join public.queue q on t.queue_id = q.id                        
    WHERE    
-   c.lvl2 LIKE %s AND c.lvl3 LIKE %s -- номер региона  
+   c.lvl2 LIKE %78% AND c.lvl3 LIKE %78% -- номер региона  
    AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
    ORDER BY t.id DESC   
-   LIMIT 1000""", (search_region, search_region))
-
+   LIMIT 1000"""
+    cursor.execute(sql)
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
