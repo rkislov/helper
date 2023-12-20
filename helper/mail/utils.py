@@ -100,7 +100,7 @@ E-mail:  supportcp@cloud.rt.ru
         worksheet.write(row, col + 5, date_time)
         worksheet.write(row, col + 6, ro[6])
         worksheet.write(row, col + 7, ro[7])
-        worksheet.write(row, col + 8, ro[8]).strip()
+        worksheet.write(row, col + 8, ro[8].strip())
         row += 1
         col = 0
     worksheet.autofit()
