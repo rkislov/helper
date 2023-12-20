@@ -53,24 +53,20 @@ E-mail:  supportcp@cloud.rt.ru
                         AND a.article_type <> 'SystemNote'
                         AND a.is_visible_for_customer = 1
                         AND a.article_sender_type = 'agent'
-                        AND a.a_body NOT LIKE '%->%'
-                    
+                        AND a.a_body NOT LIKE '%->%'                    
                     ORDER BY a.id DESC
                     LIMIT 1
-                     ) AS "comment"
-                       
+                     ) AS "comment"                       
                     FROM    
                      public.ticket t  
                      join report.v_dim_client c ON t.customer_user_id = c.login  
                      join public.ticket_state ts on t.ticket_state_id = ts.id  
-                     join public.queue q on t.queue_id = q.id  
-                       
+                     join public.queue q on t.queue_id = q.id                        
                     WHERE    
                      c.lvl2 LIKE (%s) AND c.lvl3 LIKE (%s) -- номер региона  
-                     AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые  
-                       
+                     AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
                     ORDER BY t.id DESC   
-                    LIMIT 1000, (search_region,search_region)
+                    LIMIT 1000, (search_region, search_region)
                        """)
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
