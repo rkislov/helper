@@ -30,7 +30,7 @@ E-mail:  supportcp@cloud.rt.ru
     """
     fields = ['Номер заявки', 'Тема заявки', 'ИКСРФ/ТИК', 'ФИО Заявителя', 'email заявителя', 'Дата', 'Статус',
               'линия ТП', 'Комментарий']
-    search_region = f"%{region.region_number}%"
+    search_region = f"'%{region.region_number}%'"
     print(search_region)
 
     cursor = connect.cursor()
