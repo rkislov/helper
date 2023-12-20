@@ -34,39 +34,36 @@ E-mail:  supportcp@cloud.rt.ru
     print(search_region)
     cursor = connect.cursor()
     cursor.execute("""
-                    SELECT
-                     t.tn,  
-                     t.title,  
-                     c.company_name,  
-                     c.full_name,  
-                     c.login,  
-                     t.create_time,  
-                     ts.comments AS "ticket_state",  
-                     q.name AS "queue",
-                     (
-                    SELECT
-                        a.a_body 
-                    FROM
-                        report.v_fact_article a
-                    WHERE
-                        a.ticket_id = t.id
-                        AND a.article_type <> 'SystemNote'
-                        AND a.is_visible_for_customer = 1
-                        AND a.article_sender_type = 'agent'
-                        AND a.a_body NOT LIKE '%->%'                    
-                    ORDER BY a.id DESC
-                    LIMIT 1
-                     ) AS "comment"                       
-                    FROM    
-                     public.ticket t  
-                     join report.v_dim_client c ON t.customer_user_id = c.login  
-                     join public.ticket_state ts on t.ticket_state_id = ts.id  
-                     join public.queue q on t.queue_id = q.id                        
-                    WHERE    
-                     c.lvl2 LIKE (%s) AND c.lvl3 LIKE (%s) -- номер региона  
-                     AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
-                    ORDER BY t.id DESC   
-                    LIMIT 1000""", (search_region, search_region))
+   SELECT 
+   t.tn,  
+   t.title,  
+   c.company_name,  
+   c.full_name,  
+   c.login,  
+   t.create_time,  
+   ts.comments AS "ticket_state",  
+   q.name AS "queue",
+   (
+   SELECT
+   a.a_body 
+   FROM
+   report.v_fact_article a
+   WHERE
+   a.ticket_id = t.id
+   AND a.article_type <> 'SystemNote'
+   AND a.is_visible_for_customer = 1
+   AND a.article_sender_type = 'agent'
+   AND a.a_body NOT LIKE '%->%'                    
+   ORDER BY a.id DESC
+   LIMIT 1) AS "comment" FROM public.ticket t join report.v_dim_client c ON t.customer_user_id = c.login  
+   join public.ticket_state ts on t.ticket_state_id = ts.id  
+   join public.queue q on t.queue_id = q.id                        
+   WHERE    
+   c.lvl2 LIKE (%s) AND c.lvl3 LIKE (%s) -- номер региона  
+   AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
+   ORDER BY t.id DESC   
+   LIMIT 1000""", (search_region, search_region))
+
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
