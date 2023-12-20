@@ -34,7 +34,7 @@ E-mail:  supportcp@cloud.rt.ru
     search_region = f"%{region.region_number}%"
     print(search_region)
     cursor = connect.cursor()
-    cursor.execute("""SELECT
+    cursor.executescript("""SELECT
                      t.tn,  
                      t.title,  
                      c.company_name,  
