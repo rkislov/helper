@@ -66,7 +66,7 @@ E-mail:  supportcp@cloud.rt.ru
                      join public.queue q on t.queue_id = q.id  
                        
                     WHERE    
-                     c.lvl2 LIKE ? AND c.lvl3 LIKE ? -- номер региона  
+                     c.lvl2 LIKE %s AND c.lvl3 LIKE %s -- номер региона  
                      AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые  
                        
                     ORDER BY t.id DESC   
