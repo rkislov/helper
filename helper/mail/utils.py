@@ -19,7 +19,6 @@ def generate_otchet(region_number):
 
     filename = f"region-{region_number}-{datetime.date.today().isoformat()}.xlsx"
     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
-    #message = f"напраялю отчет по заявкам за по региону №{region_number} за {datetime.date.today().isoformat()} "
     message = f"""Добрый день.
 
 Во вложении отчет по заявкам по региону №{region_number}  на {datetime.date.today().isoformat()} 
@@ -63,20 +62,16 @@ E-mail:  supportcp@cloud.rt.ru
                      join public.ticket_state ts on t.ticket_state_id = ts.id  
                      join public.queue q on t.queue_id = q.id                        
                     WHERE    
-                     c.lvl2 LIKE '%78%' AND c.lvl3 LIKE '%78%' -- номер региона  
+                     c.lvl2 LIKE (%s) AND c.lvl3 LIKE (%s) -- номер региона  
                      AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
                     ORDER BY t.id DESC   
-                    LIMIT 1000
-                       """)
+                    LIMIT 1000""", (search_region, search_region))
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
-    #print(row[0])
-    #print(row[1])
     workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet()
     format1 = workbook.add_format({'bg_color': '#D9D9D9', 'bold': True})
-    #bold = workbook.add_format({'bold': True})
     row = 0
     col = 0
     for f in fields:
@@ -84,14 +79,8 @@ E-mail:  supportcp@cloud.rt.ru
         col +=1
     row += 1
     col = 0
-    # print(tuple_to_list(row))
-    #with open(os.path.join(django_settings.STATIC_ROOT, f'{filename}'), 'w') as f:
-    #    csv_writer = csv.writer(f)
-    #    csv_writer.writerow(fields)
-    #format1 = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
     for ro in rows:
         date_time = f"{ro[5]}"
-        #print(date_time)
         worksheet.write(row, col, ro[0])
         worksheet.write(row, col + 1, ro[1])
         worksheet.write(row, col + 2, ro[2])
