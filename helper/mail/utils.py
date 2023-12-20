@@ -67,7 +67,7 @@ E-mail:  supportcp@cloud.rt.ru
                      AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
                     ORDER BY t.id DESC   
                     LIMIT 1000
-                       """, (search_region, search_region))
+                       """)
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
