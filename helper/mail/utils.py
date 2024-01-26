@@ -184,4 +184,4 @@ LIMIT 1000
     worksheet.set_default_row(50)
     workbook.close()
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(["service-managers@cifro.tech"], subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay(["service-manager@cifro.tech"], subject, 'post@cifro.tech', message, filename)
