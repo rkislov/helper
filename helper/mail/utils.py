@@ -112,6 +112,7 @@ def generate_newotchet():
 #     message = f"""Добрый день.
 #
     filename = f"full-{datetime.date.today().isoformat()}.xlsx"
+    subject = f"full-{datetime.date.today().isoformat()}"
 # Во вложении отчет по заявкам по региону №{region_number}  на {datetime.date.today().isoformat()}
 #
 #
