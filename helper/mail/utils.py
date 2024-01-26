@@ -109,17 +109,20 @@ def generate_newotchet():
 
 #     filename = f"region-{region_number}-{datetime.date.today().isoformat()}.xlsx"
 #     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
-#     message = f"""Добрый день.
+#
 #
     filename = f"full-{datetime.date.today().isoformat()}.xlsx"
     subject = f"full-{datetime.date.today().isoformat()}"
-# Во вложении отчет по заявкам по региону №{region_number}  на {datetime.date.today().isoformat()}
-#
-#
-# Служба поддержки ЦП
-# Телефон: 8-800-301-23-39
-# E-mail:  supportcp@cloud.rt.ru
-#     """
+
+
+    message = f"""Добрый день.
+ Во вложении полный отчет по заявкам  на {datetime.date.today().isoformat()}
+
+
+ Служба поддержки ЦП
+ Телефон: 8-800-301-23-39
+ E-mail:  supportcp@cloud.rt.ru
+     """
     fields = ['№ п/п', 'Дата поступления', 'Время поступления', 'Номер обращения', 'Заявитель (фамилия и инициалы)',
     'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения', 'Приоритет обращения',
     'Наименование подсистемы', 'Исполнитель обращения', 'Текущий статус', 'Описание оказанной консультации',
