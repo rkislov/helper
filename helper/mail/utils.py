@@ -180,7 +180,7 @@ LIMIT 1000
          col = 0
     worksheet.autofit()
     worksheet.freeze_panes(1, 0)
-    worksheet.autofilter(0, 0, 1000, 8)
+    worksheet.autofilter(0, 0, 1000, 20)
     worksheet.set_default_row(50)
     workbook.close()
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
