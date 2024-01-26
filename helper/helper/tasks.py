@@ -11,13 +11,13 @@ logger = get_task_logger(__name__)
 
 
 @shared_task
-def check_email():
-    call_command("mailcheck", )
+# def check_email():
+#     call_command("mailcheck", )
 
 
 @shared_task
-def create_otchet():
-    call_command("otchet", )
+def create_fullotchet():
+    call_command("fullotchet", )
 
 
 @shared_task()
