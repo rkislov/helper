@@ -100,7 +100,7 @@ E-mail:  supportcp@cloud.rt.ru
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
 
 
-def generate_newotchet():
+def generate_fullotchet():
    # region = Region.objects.filter(region_number=region_number).first()
 
     connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
