@@ -119,9 +119,9 @@ def generate_newotchet():
  Во вложении полный отчет по заявкам  на {datetime.date.today().isoformat()}
 
 
- Служба поддержки ЦП
- Телефон: 8-800-301-23-39
- E-mail:  supportcp@cloud.rt.ru
+Служба поддержки ЦП
+Телефон: 8-800-301-23-39
+E-mail:  supportcp@cloud.rt.ru
      """
     fields = ['№ п/п', 'Дата поступления', 'Время поступления', 'Номер обращения', 'Заявитель (фамилия и инициалы)',
     'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения', 'Приоритет обращения',
@@ -184,4 +184,4 @@ LIMIT 1000
     worksheet.set_default_row(50)
     workbook.close()
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(["roman.kislov@rt.ru"], subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay(["service-managers@cifro.tech"], subject, 'post@cifro.tech', message, filename)
