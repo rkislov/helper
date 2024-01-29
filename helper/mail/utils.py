@@ -138,6 +138,7 @@ E-mail:  supportcp@cloud.rt.ru
     """
     cursor.execute(sql)
     rows = cursor.fetchall()
+    print(rows[0])
     print("Total rows are:  ", len(rows))
     #print("Row 0: ", rows[0])
 
