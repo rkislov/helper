@@ -199,12 +199,13 @@ E-mail:  supportcp@cloud.rt.ru
     for email in iteremails:
         emails.append(email.email)
     print(emails)
-    print(path)
+    print(filename)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, path)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     for top in alltopics:
+        print("ready :", path)
         df = pd.read_excel(path)
         for service in top.services:
             message = f"""Добрый день.
