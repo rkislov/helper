@@ -217,7 +217,7 @@ E-mail:  supportcp@cloud.rt.ru
     worksheet = make_file(filename, rows)
 
     emails = []
-    print(topic.recivers)
+    print(topic.recivers.email.all())
     #for email in topic.recivers:
     #    emails.append(email)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
