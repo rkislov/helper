@@ -202,7 +202,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(filename)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     # for top in alltopics:
     #     print("ready :", filename)
