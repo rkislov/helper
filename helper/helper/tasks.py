@@ -16,7 +16,7 @@ logger = get_task_logger(__name__)
 
 
 @shared_task
-def create_fullotchet():
+def generate_fullotchet():
     call_command("fullotchet", )
 
 

@@ -180,7 +180,7 @@ def make_file(filename, rows):
 
 
 
-def generate_fullotchet():
+def create_fullotchet():
    # region = Region.objects.filter(region_number=region_number).first()
 
     connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
