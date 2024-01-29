@@ -217,9 +217,10 @@ E-mail:  supportcp@cloud.rt.ru
     worksheet = make_file(filename, rows)
 
     emails = []
-    print(topic.recivers.all())
-    #for email in topic.recivers:
-    #    emails.append(email)
+    iteremails = topic.recivers.all()
+    print(iteremails[0])
+    for email in iteremails:
+        emails.append(email.email)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
     #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
