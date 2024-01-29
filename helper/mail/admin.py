@@ -38,6 +38,7 @@ class ReciverAdmin(admin.ModelAdmin):
 class TopicAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'slug']
     search_fields = ['id', 'name', 'slug']
+    prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Region, RegionAdmin)
