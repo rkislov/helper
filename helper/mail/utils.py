@@ -114,8 +114,9 @@ def generate_topic(filename, topic):
         df_rows = df[df['Наименование подсистемы'] == service.name]
         rows = []
         emails = []
-        for email in topic.recivers:
-            rows.append(email)
+        iteremails = topic.recivers.all()
+        for email in iteremails:
+            rows.append(email.email)
 
         newfilename = f"{service.name}-{datetime.date.today().isoformat()}.xlsx"
         newsubject = f"{service.name}-{datetime.date.today()}"
@@ -223,9 +224,9 @@ E-mail:  supportcp@cloud.rt.ru
         emails.append(email.email)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
 
-    #or top in alltopics:
-    #    generate_topic(worksheet,top)
+    for top in alltopics:
+        generate_topic(worksheet,top)
 
 
