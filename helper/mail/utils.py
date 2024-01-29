@@ -122,8 +122,8 @@ def generate_topic(filename, topic):
         newsubject = f"{service.name}-{datetime.date.today()}"
         for row in df_rows.itterows():
             rows.append(row)
-            worksheet = make_file(newfilename, rows)
-            send_otchet_email_task.delay(emails, newsubject, 'post@cifro.tech', message, worksheet)
+            path = make_file(newfilename, rows)
+            send_otchet_email_task.delay(emails, newsubject, 'post@cifro.tech', message, path)
 
 
 def make_file(filename, rows):
@@ -176,7 +176,8 @@ def make_file(filename, rows):
     worksheet.autofilter(0, 0, 1000, 20)
     worksheet.set_default_row(50)
     workbook.close()
-    return worksheet
+    return path
+
 
 
 def generate_fullotchet():
@@ -218,7 +219,7 @@ E-mail:  supportcp@cloud.rt.ru
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     #print("Row 0: ", rows[0])
-    worksheet = make_file(filename, rows)
+    path = make_file(filename, rows)
 
     emails = []
     iteremails = topic.recivers.all()
@@ -228,7 +229,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(emails)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, path)
 
     # for top in alltopics:
     #     generate_topic(worksheet, top)
