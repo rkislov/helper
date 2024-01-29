@@ -15,9 +15,9 @@ logger = get_task_logger(__name__)
 #     call_command("mailcheck", )
 
 
-# @shared_task
-# def generate_fullotchet():
-#     call_command("fullotchet", )
+@shared_task
+def generate_fullotchet():
+    call_command("fullotchet", )
 
 
 @shared_task()
