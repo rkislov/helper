@@ -224,5 +224,6 @@ LIMIT 1000
     send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
 
     for top in alltopics:
+        generate_topic(worksheet,top)
 
 
