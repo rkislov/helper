@@ -217,7 +217,7 @@ LIMIT 1000
     worksheet = make_file(filename, rows)
 
     emails = []
-    for email in topic.receivers:
+    for email in topic.recivers:
         emails.append(email)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
