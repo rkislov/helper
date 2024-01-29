@@ -226,7 +226,7 @@ E-mail:  supportcp@cloud.rt.ru
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
     send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
 
-    for top in alltopics:
-        generate_topic(worksheet, top)
+    # for top in alltopics:
+    #     generate_topic(worksheet, top)
 
 
