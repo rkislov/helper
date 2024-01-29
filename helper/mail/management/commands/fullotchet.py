@@ -1,6 +1,4 @@
-import psycopg2
 from django.core.management.base import BaseCommand
-from mail.models import Region
 from mail.utils import generate_fullotchet
 
 
