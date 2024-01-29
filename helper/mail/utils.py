@@ -224,11 +224,11 @@ E-mail:  supportcp@cloud.rt.ru
     iteremails = topic.recivers.all()
     print(iteremails[0])
     for email in iteremails:
-        emails.append(email)
+        emails.append(email.email)
     print(emails)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
 
     # for top in alltopics:
     #     generate_topic(worksheet, top)
