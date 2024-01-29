@@ -125,6 +125,7 @@ def generate_topic(filename, topic):
             worksheet = make_file(newfilename, rows)
             send_otchet_email_task.delay(emails, newsubject, 'post@cifro.tech', message, worksheet)
 
+
 def make_file(filename, rows):
     fields = ['№ п/п', 'Дата поступления', 'Время поступления', 'Номер обращения', 'Заявитель (фамилия и инициалы)',
               'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения',
@@ -176,6 +177,8 @@ def make_file(filename, rows):
     worksheet.set_default_row(50)
     workbook.close()
     return worksheet
+
+
 def generate_fullotchet():
    # region = Region.objects.filter(region_number=region_number).first()
 
@@ -222,9 +225,10 @@ E-mail:  supportcp@cloud.rt.ru
     print(iteremails[0])
     for email in iteremails:
         emails.append(email)
+    print(emails)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
+    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, worksheet)
 
     # for top in alltopics:
     #     generate_topic(worksheet, top)
