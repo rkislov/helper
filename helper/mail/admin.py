@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.http.response import HttpResponseRedirect
 from django.core.management import call_command
 from django.urls import path
-from .models import Region
+from .models import Region, Reciver, Service, Topic
 
 
 class RegionAdmin(admin.ModelAdmin):
@@ -24,4 +24,23 @@ class RegionAdmin(admin.ModelAdmin):
         return HttpResponseRedirect("../")
 
 
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+    search_fields = ['id', 'name']
+    prepopulated_fields = {"slug": ("name",)}
+
+
+class ReciverAdmin(admin.ModelAdmin):
+    list_display = ['id', 'email', 'description']
+    search_fields = ['id', 'email', 'description']
+
+
+class TopicAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'slug']
+    search_fields = ['id', 'name', 'slug']
+
+
 admin.site.register(Region, RegionAdmin)
+admin.site.register(Service, ServiceAdmin)
+admin.site.register(Reciver, ReciverAdmin)
+admin.site.register(Topic, TopicAdmin)
