@@ -193,7 +193,7 @@ def generate_fullotchet():
 
 
     message = f"""Добрый день.
- Во вложении полный отчет по заявкам  на {datetime.date.today().isoformat()}
+Во вложении полный отчет по заявкам  на {datetime.date.today().isoformat()}
 
 
 Служба поддержки ЦП
@@ -207,9 +207,9 @@ E-mail:  supportcp@cloud.rt.ru
     cursor = connect.cursor()
     sql = f"""
     SELECT * 
-FROM report.v_try_report
-LIMIT 1000
-"""
+    FROM report.v_try_report
+    LIMIT 1000
+    """
     cursor.execute(sql)
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
@@ -217,7 +217,7 @@ LIMIT 1000
     worksheet = make_file(filename, rows)
 
     emails = []
-   print(topic.recivers[0])
+    print(topic.recivers.tolist())
     #for email in topic.recivers:
     #    emails.append(email)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
