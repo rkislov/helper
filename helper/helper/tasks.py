@@ -10,7 +10,7 @@ logger = get_task_logger(__name__)
 
 
 
-@shared_task
+#@shared_task
 # def check_email():
 #     call_command("mailcheck", )
 
