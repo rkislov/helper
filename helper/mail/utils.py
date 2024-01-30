@@ -187,6 +187,7 @@ E-mail:  supportcp@cloud.rt.ru
             filtered_counts_10 = filtered_df_10['Текущий статус'].value_counts().to_frame()
             print(counts)
             counts['5 дней'] = filtered_counts
+            counts['10 дней'] = filtered_counts_10
             print(counts)
             print("\nболее 5 дней назад:")
             print(filtered_counts)
