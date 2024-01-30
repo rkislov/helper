@@ -174,6 +174,7 @@ E-mail:  supportcp@cloud.rt.ru
             workbook.close()
         else:
             iterservices = topic.services.all()
+            print(iterservices)
             for item in iterservices:
                 services.append(item.name)
             print(services)
