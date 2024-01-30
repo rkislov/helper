@@ -148,100 +148,30 @@ E-mail:  supportcp@cloud.rt.ru
 
 
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
-    workbook = xlsxwriter.Workbook(path)
-    worksheet = workbook.add_worksheet()
-    worksheet2 = workbook.add_worksheet()
-    format1 = workbook.add_format({'bg_color': '#D9D9D9', 'bold': True})
-    row = 0
-    col = 0
-    row2 = 0
-    col2 = 0
-    for f in fields:
-        worksheet.write(row, col, f, format1)
-        col += 1
-    row += 1
-    col = 0
-    for f in fields2:
-        worksheet2.write(row2, col2, f, format1)
-        col2 += 1
-    row2 += 1
-    col2 = 0
-    dict = {}
+
+
     if topic.slug == 'all':
         print(df)
-        for ro in rows:
-            worksheet.write(row, col, ro[0])
-            worksheet.write(row, col + 1, ro[1])
-            worksheet.write(row, col + 2, ro[2])
-            worksheet.write(row, col + 3, ro[3])
-            worksheet.write(row, col + 4, ro[4])
-            worksheet.write(row, col + 5, ro[5])
-            worksheet.write(row, col + 6, ro[6])
-            worksheet.write(row, col + 7, ro[7])
-            worksheet.write(row, col + 8, ro[8])
-            worksheet.write(row, col + 9, ro[9])
-            worksheet.write(row, col + 10, ro[10])
-            worksheet.write(row, col + 11, ro[11])
-            worksheet.write(row, col + 12, ro[12])
-            worksheet.write(row, col + 13, ro[13])
-            worksheet.write(row, col + 14, ro[14])
-            worksheet.write(row, col + 15, ro[15])
-            worksheet.write(row, col + 16, ro[16])
-            worksheet.write(row, col + 17, ro[17])
-            worksheet.write(row, col + 18, ro[18])
-            worksheet.write(row, col + 19, ro[19])
-            row += 1
-            col = 0
-            if ro[12] not in dict:
-                dict[ro[12]] = 1
-            else:
-                dict[ro[12]] += 1
+        writer = pd.ExcelWriter(path, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Заявки', index=False)
+        workbook = writer.book
+        worksheet = writer.sheets['Заявки']
+        worksheet.freeze_panes(1, 0)
+        worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
+
+        # Сохранение изменений и закрытие writer
+        writer.save()
     else:
         servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
         print(servis_df)
-        for ro in rows:
-            if ro[10] == topic.name:
-                worksheet.write(row, col, ro[0])
-                worksheet.write(row, col + 1, ro[1])
-                worksheet.write(row, col + 2, ro[2])
-                worksheet.write(row, col + 3, ro[3])
-                worksheet.write(row, col + 4, ro[4])
-                worksheet.write(row, col + 5, ro[5])
-                worksheet.write(row, col + 6, ro[6])
-                worksheet.write(row, col + 7, ro[7])
-                worksheet.write(row, col + 8, ro[8])
-                worksheet.write(row, col + 9, ro[9])
-                worksheet.write(row, col + 10, ro[10])
-                worksheet.write(row, col + 11, ro[11])
-                worksheet.write(row, col + 12, ro[12])
-                worksheet.write(row, col + 13, ro[13])
-                worksheet.write(row, col + 14, ro[14])
-                worksheet.write(row, col + 15, ro[15])
-                worksheet.write(row, col + 16, ro[16])
-                worksheet.write(row, col + 17, ro[17])
-                worksheet.write(row, col + 18, ro[18])
-                worksheet.write(row, col + 19, ro[19])
-                row += 1
-                col = 0
-                if ro[12] not in dict:
-                    dict[ro[12]] = 1
-                else:
-                    dict[ro[12]] += 1
-    worksheet.autofit()
-    worksheet.freeze_panes(1, 0)
-    worksheet.autofilter(0, 0, 1000, 20)
-    worksheet.set_default_row(50)
-    print(dict)
-    for key, value in dict.items():
-         worksheet2.write(row2, col2, key)
-         worksheet2.write(row2, col2 + 1, value)
-         row2 += 1
-         col2 = 0
-    worksheet.autofit()
-    worksheet.freeze_panes(1, 0)
-    worksheet.autofilter(0, 0, 1000, 2)
-    worksheet.set_default_row(50)
-    workbook.close()
+        writer = pd.ExcelWriter(path, engine='xlsxwriter')
+        servis_df.to_excel(writer, sheet_name='Заявки', index=False)
+        workbook = writer.book
+        worksheet = writer.sheets['Заявки']
+        worksheet.freeze_panes(1, 0)
+        worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
+        writer.save()
+
 
     emails = []
     iteremails = topic.recivers.all()
@@ -251,7 +181,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(emails)
     print(filename)
 
-    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
