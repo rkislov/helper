@@ -161,32 +161,61 @@ E-mail:  supportcp@cloud.rt.ru
         col += 1
     row += 1
     col = 0
-    for ro in rows:
-        date_time = f"{ro[5]}"
-        worksheet.write(row, col, ro[0])
-        worksheet.write(row, col + 1, ro[1])
-        worksheet.write(row, col + 2, ro[2])
-        worksheet.write(row, col + 3, ro[3])
-        worksheet.write(row, col + 4, ro[4])
-        worksheet.write(row, col + 5, ro[5])
-        worksheet.write(row, col + 6, ro[6])
-        worksheet.write(row, col + 7, ro[7])
-        worksheet.write(row, col + 8, ro[8])
-        worksheet.write(row, col + 9, ro[9])
-        worksheet.write(row, col + 10, ro[10])
-        worksheet.write(row, col + 11, ro[11])
-        worksheet.write(row, col + 12, ro[12])
-        worksheet.write(row, col + 13, ro[13])
-        worksheet.write(row, col + 14, ro[14])
-        worksheet.write(row, col + 15, ro[15])
-        worksheet.write(row, col + 16, ro[16])
-        worksheet.write(row, col + 17, ro[17])
-        worksheet.write(row, col + 18, ro[18])
-        worksheet.write(row, col + 19, ro[19])
-        # if ro[8] != None:
-        #     worksheet.write(row, col + 8, ro[8].strip())
-        row += 1
-        col = 0
+    if topic.slug == 'all':
+        for ro in rows:
+            date_time = f"{ro[5]}"
+            worksheet.write(row, col, ro[0])
+            worksheet.write(row, col + 1, ro[1])
+            worksheet.write(row, col + 2, ro[2])
+            worksheet.write(row, col + 3, ro[3])
+            worksheet.write(row, col + 4, ro[4])
+            worksheet.write(row, col + 5, ro[5])
+            worksheet.write(row, col + 6, ro[6])
+            worksheet.write(row, col + 7, ro[7])
+            worksheet.write(row, col + 8, ro[8])
+            worksheet.write(row, col + 9, ro[9])
+            worksheet.write(row, col + 10, ro[10])
+            worksheet.write(row, col + 11, ro[11])
+            worksheet.write(row, col + 12, ro[12])
+            worksheet.write(row, col + 13, ro[13])
+            worksheet.write(row, col + 14, ro[14])
+            worksheet.write(row, col + 15, ro[15])
+            worksheet.write(row, col + 16, ro[16])
+            worksheet.write(row, col + 17, ro[17])
+            worksheet.write(row, col + 18, ro[18])
+            worksheet.write(row, col + 19, ro[19])
+            # if ro[8] != None:
+            #     worksheet.write(row, col + 8, ro[8].strip())
+            row += 1
+            col = 0
+    else:
+        for ro in rows:
+            if ro[10] == topic.name:
+                date_time = f"{ro[5]}"
+                worksheet.write(row, col, ro[0])
+                worksheet.write(row, col + 1, ro[1])
+                worksheet.write(row, col + 2, ro[2])
+                worksheet.write(row, col + 3, ro[3])
+                worksheet.write(row, col + 4, ro[4])
+                worksheet.write(row, col + 5, ro[5])
+                worksheet.write(row, col + 6, ro[6])
+                worksheet.write(row, col + 7, ro[7])
+                worksheet.write(row, col + 8, ro[8])
+                worksheet.write(row, col + 9, ro[9])
+                worksheet.write(row, col + 10, ro[10])
+                worksheet.write(row, col + 11, ro[11])
+                worksheet.write(row, col + 12, ro[12])
+                worksheet.write(row, col + 13, ro[13])
+                worksheet.write(row, col + 14, ro[14])
+                worksheet.write(row, col + 15, ro[15])
+                worksheet.write(row, col + 16, ro[16])
+                worksheet.write(row, col + 17, ro[17])
+                worksheet.write(row, col + 18, ro[18])
+                worksheet.write(row, col + 19, ro[19])
+                # if ro[8] != None:
+                #     worksheet.write(row, col + 8, ro[8].strip())
+                row += 1
+                col = 0
     worksheet.autofit()
     worksheet.freeze_panes(1, 0)
     worksheet.autofilter(0, 0, 1000, 20)
@@ -203,7 +232,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(filename)
     #path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     #send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
-    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     # for top in alltopics:
     #     print("ready :", filename)
