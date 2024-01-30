@@ -176,15 +176,15 @@ E-mail:  supportcp@cloud.rt.ru
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
-            counts = servis_df['Текущий статус'].value_counts()
+            counts = servis_df['Текущий статус'].value_counts().to_frame()
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
             ten_days_ago = today - datetime.timedelta(days=7)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
-            filtered_counts = filtered_df['Текущий статус'].value_counts()
-            filtered_counts_10 = filtered_df_10['Текущий статус'].value_counts()
+            filtered_counts = filtered_df['Текущий статус'].value_counts().to_frame()
+            filtered_counts_10 = filtered_df_10['Текущий статус'].value_counts().to_frame()
             print(counts)
             print("\nболее 5 дней назад:")
             print(filtered_counts)
