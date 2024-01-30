@@ -144,7 +144,7 @@ E-mail:  supportcp@cloud.rt.ru
     fields2 =['Статус', 'Количество']
 
     df = pd.DataFrame(list(rows), columns=fields)
-    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y')
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
 
 
 
