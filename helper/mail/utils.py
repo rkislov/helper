@@ -180,10 +180,14 @@ E-mail:  supportcp@cloud.rt.ru
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
+            ten_days_ago = today - datetime.timedelta(days=10)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
+            filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
             filtered_counts = filtered_df['Текущий статус'].value_counts()
             print(counts)
             print("\nболее 5 дней назад:")
+            print(filtered_counts)
+            print("\nболее 10 дней назад:")
             print(filtered_counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.to_excel(writer, sheet_name='Заявки', index=False)
