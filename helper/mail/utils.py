@@ -101,15 +101,14 @@ E-mail:  supportcp@cloud.rt.ru
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
 
 
-def create_fullotchet(topic):
+def create_fullotchet():
 
 
     connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
                                password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
                                port=os.getenv("DBE_PORT"))
 
-    filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
-    subject = f"{topic.slug}-{datetime.date.today().isoformat()}"
+
 
 
     message = f"""Добрый день.
@@ -147,46 +146,51 @@ E-mail:  supportcp@cloud.rt.ru
     df = pd.DataFrame(list(rows), columns=fields)
 
 
-    path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
 
 
-    if topic.slug == 'all':
-        print(df)
-        print(len(df.columns))
-        print(len(df))
-        writer = pd.ExcelWriter(path, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Заявки', index=False)
-        workbook = writer.book
-        worksheet = writer.sheets['Заявки']
-        worksheet.autofit()
-        worksheet.freeze_panes(1, 0)
-        worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
-        workbook.close()
-    else:
-        servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
-        print(servis_df)
-        print(len(servis_df.columns))
-        print(len(servis_df))
-        writer = pd.ExcelWriter(path, engine='xlsxwriter')
-        servis_df.to_excel(writer, sheet_name='Заявки', index=False)
-        workbook = writer.book
-        worksheet = writer.sheets['Заявки']
-        worksheet.autofit()
-        worksheet.freeze_panes(1, 0)
-        worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
-        workbook.close()
+    topics = Topic.objects.all()
+
+    for topic in topics:
+        filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
+        subject = f"{topic.slug}-{datetime.date.today().isoformat()}"
+        path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
+        if topic.slug == 'all':
+            print(df)
+            print(len(df.columns))
+            print(len(df))
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            df.to_excel(writer, sheet_name='Заявки', index=False)
+            workbook = writer.book
+            worksheet = writer.sheets['Заявки']
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
+            workbook.close()
+        else:
+            servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
+            print(servis_df)
+            print(len(servis_df.columns))
+            print(len(servis_df))
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            servis_df.to_excel(writer, sheet_name='Заявки', index=False)
+            workbook = writer.book
+            worksheet = writer.sheets['Заявки']
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+            workbook.close()
 
 
 
-    emails = []
-    iteremails = topic.recivers.all()
-    print(iteremails[0])
-    for email in iteremails:
-        emails.append(email.email)
-    print(emails)
-    print(filename)
+        emails = []
+        iteremails = topic.recivers.all()
+        print(iteremails[0])
+        for email in iteremails:
+            emails.append(email.email)
+        print(emails)
+        print(filename)
 
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
