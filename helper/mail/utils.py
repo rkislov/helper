@@ -175,24 +175,21 @@ E-mail:  supportcp@cloud.rt.ru
         else:
             services = []
             iterservices = topic.services.all()
-            print(iterservices)
             for item in iterservices:
-                print(item)
                 services.append(item.name)
-            print(services)
-            servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
+            servis_df = df.loc[df['Наименование подсистемы'].isin(services)]
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
-            counts = servis_df['Текущий статус'].value_counts().to_frame(name='Всего')
+            counts = servis_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame(name='Всего')
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
             ten_days_ago = today - datetime.timedelta(days=7)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
-            filtered_counts = filtered_df['Текущий статус'].value_counts().to_frame()
-            filtered_counts_10 = filtered_df_10['Текущий статус'].value_counts().to_frame()
+            filtered_counts = filtered_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
+            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
             print(counts)
             counts['5 дней'] = filtered_counts
             counts['10 дней'] = filtered_counts_10
@@ -222,7 +219,7 @@ E-mail:  supportcp@cloud.rt.ru
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
