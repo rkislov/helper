@@ -164,6 +164,9 @@ E-mail:  supportcp@cloud.rt.ru
             worksheet = writer.sheets['Заявки']
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
+            for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
             worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
             workbook.close()
         else:
@@ -177,6 +180,9 @@ E-mail:  supportcp@cloud.rt.ru
             worksheet = writer.sheets['Заявки']
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
+            for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
             worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
             workbook.close()
 
