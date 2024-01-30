@@ -191,7 +191,7 @@ E-mail:  supportcp@cloud.rt.ru
             print(counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.to_excel(writer, sheet_name='Заявки', index=False)
-            counts.to_excel(writer, sheet_name='Статистика', index=False)
+            counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
             worksheet.autofit()
