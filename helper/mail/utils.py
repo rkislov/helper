@@ -158,8 +158,9 @@ E-mail:  supportcp@cloud.rt.ru
         df.to_excel(writer, sheet_name='Заявки', index=False)
         workbook = writer.book
         worksheet = writer.sheets['Заявки']
+        worksheet.autofit()
         worksheet.freeze_panes(1, 0)
-        worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
+        worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
         workbook.close()
     else:
         servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
@@ -170,8 +171,9 @@ E-mail:  supportcp@cloud.rt.ru
         servis_df.to_excel(writer, sheet_name='Заявки', index=False)
         workbook = writer.book
         worksheet = writer.sheets['Заявки']
+        worksheet.autofit()
         worksheet.freeze_panes(1, 0)
-        worksheet.autofilter(0, 0, len(servis_df.columns) - 1, len(servis_df))
+        worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
         workbook.close()
 
 
@@ -184,7 +186,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(emails)
     print(filename)
 
-    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
