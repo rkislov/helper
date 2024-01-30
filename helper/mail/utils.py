@@ -134,6 +134,7 @@ E-mail:  supportcp@cloud.rt.ru
     print("Total rows are:  ", len(rows))
 
 
+
     fields = ['№ п/п', 'Дата поступления', 'Время поступления', 'Номер обращения', 'Заявитель (фамилия и инициалы)',
               'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения',
               'Приоритет обращения',
@@ -142,6 +143,10 @@ E-mail:  supportcp@cloud.rt.ru
               'Общее время обработки', 'Канал поступления']
 
     fields2 =['Статус', 'Количество']
+
+    df = pd.DataFrame(list(rows), columns=fields)
+
+
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
     workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet()
@@ -163,6 +168,7 @@ E-mail:  supportcp@cloud.rt.ru
     col2 = 0
     dict = {}
     if topic.slug == 'all':
+        print(df)
         for ro in rows:
             worksheet.write(row, col, ro[0])
             worksheet.write(row, col + 1, ro[1])
@@ -191,6 +197,8 @@ E-mail:  supportcp@cloud.rt.ru
             else:
                 dict[ro[12]] += 1
     else:
+        servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
+        print(servis_df)
         for ro in rows:
             if ro[10] == topic.name:
                 worksheet.write(row, col, ro[0])
@@ -242,8 +250,7 @@ E-mail:  supportcp@cloud.rt.ru
         emails.append(email.email)
     print(emails)
     print(filename)
-    df = pd.DataFrame(list(rows), columns=fields)
-    print(df)
+
     #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
