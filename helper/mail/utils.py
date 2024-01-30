@@ -101,7 +101,7 @@ E-mail:  supportcp@cloud.rt.ru
     send_otchet_email_task.delay([region.region_admin_email], subject, 'post@cifro.tech', message, filename)
 
 
-def create_fullotchet():
+def create_fullotchet(topic):
    # region = Region.objects.filter(region_number=region_number).first()
 
     connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
@@ -112,8 +112,8 @@ def create_fullotchet():
 #     subject = f"region-{region_number}-{datetime.date.today().isoformat()}"
 #
 #
-    topic = Topic.objects.filter(slug='all').first()
-    alltopics = Topic.objects.exclude(slug='all').all()
+    # topic = Topic.objects.filter(slug='all').first()
+    # alltopics = Topic.objects.exclude(slug='all').all()
     filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
     subject = f"{topic.slug}-{datetime.date.today().isoformat()}"
 
