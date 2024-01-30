@@ -152,6 +152,8 @@ E-mail:  supportcp@cloud.rt.ru
 
     if topic.slug == 'all':
         print(df)
+        print(len(df.columns))
+        print(len(df))
         writer = pd.ExcelWriter(path, engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Заявки', index=False)
         workbook = writer.book
@@ -162,6 +164,8 @@ E-mail:  supportcp@cloud.rt.ru
     else:
         servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
         print(servis_df)
+        print(len(servis_df.columns))
+        print(len(servis_df))
         writer = pd.ExcelWriter(path, engine='xlsxwriter')
         servis_df.to_excel(writer, sheet_name='Заявки', index=False)
         workbook = writer.book
@@ -169,8 +173,7 @@ E-mail:  supportcp@cloud.rt.ru
         worksheet.freeze_panes(1, 0)
         worksheet.autofilter(0, 0, len(servis_df.columns) - 1, len(servis_df))
         workbook.close()
-        print(len(servis_df.columns))
-        print(len(servis_df))
+
 
 
     emails = []
