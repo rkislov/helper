@@ -176,7 +176,7 @@ E-mail:  supportcp@cloud.rt.ru
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
-            counts = servis_df['Текущий статус'].value_counts().to_frame()
+            counts = servis_df['Текущий статус'].value_counts().to_frame(name='Всего')
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
