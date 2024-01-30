@@ -158,7 +158,7 @@ E-mail:  supportcp@cloud.rt.ru
         worksheet = writer.sheets['Заявки']
         worksheet.freeze_panes(1, 0)
         worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
-        workbook.save()
+        workbook.close()
     else:
         servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
         print(servis_df)
@@ -168,7 +168,7 @@ E-mail:  supportcp@cloud.rt.ru
         worksheet = writer.sheets['Заявки']
         worksheet.freeze_panes(1, 0)
         worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
-        workbook.save()
+        workbook.close()
 
 
     emails = []
