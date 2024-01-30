@@ -181,7 +181,7 @@ E-mail:  supportcp@cloud.rt.ru
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
-            filtered_counts = filtered_df['наименование'].value_counts()
+            filtered_counts = filtered_df['Текущий статус'].value_counts()
             print(counts)
             print("\nболее 5 дней назад:")
             print(filtered_counts)
