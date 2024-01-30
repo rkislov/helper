@@ -185,7 +185,7 @@ E-mail:  supportcp@cloud.rt.ru
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
             filtered_counts = filtered_df['Текущий статус'].value_counts().to_frame()
             #filtered_counts_10 = filtered_df_10['Текущий статус'].value_counts().to_frame()
-            filtered_counts_10 = filtered_df_10.groupby['Текущий статус'].size().to_frame()
+            filtered_counts_10 = filtered_df_10.groupby['Текущий статус'].count()
             print(counts)
             print("\nболее 5 дней назад:")
             print(filtered_counts)
