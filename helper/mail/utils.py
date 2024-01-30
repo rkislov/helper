@@ -150,8 +150,9 @@ E-mail:  supportcp@cloud.rt.ru
 
 
     topics = Topic.objects.all()
-
+    services = []
     for topic in topics:
+
         filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
         subject = f"{topic.slug}-{datetime.date.today().isoformat()}"
         path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
@@ -172,6 +173,10 @@ E-mail:  supportcp@cloud.rt.ru
             worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
             workbook.close()
         else:
+            iterservices = topic.services.all()
+            for item in iterservices:
+                services.append(item.name)
+            print(services)
             servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
             print(servis_df)
             print(len(servis_df.columns))
@@ -200,6 +205,8 @@ E-mail:  supportcp@cloud.rt.ru
                 worksheet.set_row(i, height)
 
             worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+            worksheet2 = writer.sheets['Статистика']
+            worksheet2.autofit()
             workbook.close()
 
 
