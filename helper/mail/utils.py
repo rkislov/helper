@@ -167,8 +167,10 @@ E-mail:  supportcp@cloud.rt.ru
         workbook = writer.book
         worksheet = writer.sheets['Заявки']
         worksheet.freeze_panes(1, 0)
-        worksheet.autofilter(0, 0, len(df.columns) - 1, len(df))
+        worksheet.autofilter(0, 0, len(servis_df.columns) - 1, len(servis_df))
         workbook.close()
+        print(len(servis_df.columns))
+        print(len(servis_df))
 
 
     emails = []
@@ -179,7 +181,7 @@ E-mail:  supportcp@cloud.rt.ru
     print(emails)
     print(filename)
 
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
