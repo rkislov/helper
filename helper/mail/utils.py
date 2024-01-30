@@ -189,12 +189,9 @@ E-mail:  supportcp@cloud.rt.ru
             counts['5 дней'] = filtered_counts
             counts['10 дней'] = filtered_counts_10
             print(counts)
-            print("\nболее 5 дней назад:")
-            print(filtered_counts)
-            print("\nболее 10 дней назад:")
-            print(filtered_counts_10)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.to_excel(writer, sheet_name='Заявки', index=False)
+            counts.to_excel(writer, sheet_name='Статистика', index=False)
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
             worksheet.autofit()
@@ -215,7 +212,7 @@ E-mail:  supportcp@cloud.rt.ru
         print(emails)
         print(filename)
 
-        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
