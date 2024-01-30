@@ -157,7 +157,7 @@ E-mail:  supportcp@cloud.rt.ru
     row += 1
     col = 0
     for f in fields2:
-        worksheet.write(row2, col2, f, format1)
+        worksheet2.write(row2, col2, f, format1)
         col2 += 1
     row2 += 1
     col2 = 0
@@ -242,7 +242,9 @@ E-mail:  supportcp@cloud.rt.ru
         emails.append(email.email)
     print(emails)
     print(filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    df = pd.DataFrame([sub.split(",") for sub in rows], columns=fields)
+    print(df)
+    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
