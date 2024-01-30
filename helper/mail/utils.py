@@ -176,7 +176,13 @@ E-mail:  supportcp@cloud.rt.ru
             print(len(servis_df.columns))
             print(len(servis_df))
             counts = servis_df['Текущий статус'].value_counts()
+            today = datetime.datetime.now().date()
+            five_days_ago = today - datetime.timedelta(days=5)
+            filtered_df = servis_df[df['дата_внесения'] < five_days_ago]
+            filtered_counts = filtered_df['наименование'].value_counts()
             print(counts)
+            print("\nболее 5 дней назад:")
+            print(filtered_counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.to_excel(writer, sheet_name='Заявки', index=False)
             workbook = writer.book
