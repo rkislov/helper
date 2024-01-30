@@ -224,11 +224,11 @@ E-mail:  supportcp@cloud.rt.ru
     worksheet.autofilter(0, 0, 1000, 20)
     worksheet.set_default_row(50)
     print(dict)
-    # for key, value in dict:
-    #     worksheet2.write(row2, col2, key)
-    #     worksheet2.write(row2, col2 + 1, value)
-    #     row2 += 1
-    #     col2 = 0
+    for key, value in dict.items():
+         worksheet2.write(row2, col2, key)
+         worksheet2.write(row2, col2 + 1, value)
+         row2 += 1
+         col2 = 0
     worksheet.autofit()
     worksheet.freeze_panes(1, 0)
     worksheet.autofilter(0, 0, 1000, 2)
