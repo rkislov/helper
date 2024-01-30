@@ -150,7 +150,7 @@ E-mail:  supportcp@cloud.rt.ru
 
 
     topics = Topic.objects.all()
-    services = []
+
     for topic in topics:
 
         filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
@@ -173,9 +173,11 @@ E-mail:  supportcp@cloud.rt.ru
             worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
             workbook.close()
         else:
+            services = []
             iterservices = topic.services.all()
             print(iterservices)
             for item in iterservices:
+                print(item)
                 services.append(item.name)
             print(services)
             servis_df = df.loc[df['Наименование подсистемы'] == topic.name]
