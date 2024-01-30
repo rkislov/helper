@@ -158,6 +158,7 @@ E-mail:  supportcp@cloud.rt.ru
             print(df)
             print(len(df.columns))
             print(len(df))
+
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df.to_excel(writer, sheet_name='Заявки', index=False)
             workbook = writer.book
@@ -174,6 +175,21 @@ E-mail:  supportcp@cloud.rt.ru
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
+
+            # Группируем по текущему статусу и считаем количество
+            df_grouped = servis_df.groupby('Текущий статус').filter(lambda x: len(x) > 0)
+            df_grouped_counts = df_grouped['Текущий статус'].value_counts()
+
+            # Фильтруем записи с градацией меньше пяти дней, меньше 10 дней и меньше 15
+            df_gradation_5 = df_grouped[df_grouped['Общее время обработки'] < 5]
+            df_gradation_10 = df_grouped[df_grouped['Общее время обработки'] < 10]
+            df_gradation_15 = df_grouped[df_grouped['Общее время обработки'] < 15]
+
+            # Выводим результаты
+            print(f"Сгруппированные данные:\n{df_grouped_counts}\n")
+            print(f"Градация меньше 5 дней:\n{df_gradation_5}\n")
+            print(f"Градация меньше 10 дней:\n{df_gradation_10}\n")
+            print(f"Градация меньше 15 дней:\n{df_gradation_15}\n")
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.to_excel(writer, sheet_name='Заявки', index=False)
             workbook = writer.book
@@ -196,7 +212,7 @@ E-mail:  supportcp@cloud.rt.ru
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
