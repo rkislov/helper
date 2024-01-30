@@ -223,11 +223,12 @@ E-mail:  supportcp@cloud.rt.ru
     worksheet.freeze_panes(1, 0)
     worksheet.autofilter(0, 0, 1000, 20)
     worksheet.set_default_row(50)
-    for key, value in dict:
-        worksheet2.write(row2, col2, key)
-        worksheet2.write(row2, col2 + 1, value)
-        row2 += 1
-        col2 = 0
+    print(dict)
+    # for key, value in dict:
+    #     worksheet2.write(row2, col2, key)
+    #     worksheet2.write(row2, col2 + 1, value)
+    #     row2 += 1
+    #     col2 = 0
     worksheet.autofit()
     worksheet.freeze_panes(1, 0)
     worksheet.autofilter(0, 0, 1000, 2)
@@ -241,7 +242,7 @@ E-mail:  supportcp@cloud.rt.ru
         emails.append(email.email)
     print(emails)
     print(filename)
-    send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+    #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
