@@ -242,7 +242,7 @@ E-mail:  supportcp@cloud.rt.ru
         emails.append(email.email)
     print(emails)
     print(filename)
-    df = pd.DataFrame([sub.split(",") for sub in rows], columns=fields)
+    df = pd.DataFrame(list(rows), columns=fields)
     print(df)
     #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
