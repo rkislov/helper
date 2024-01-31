@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 load_dotenv()
 from django.conf import settings as django_settings
 import os
-import csv
 import datetime
 import xlsxwriter
 from mail.models import Region, Topic
@@ -145,9 +144,7 @@ E-mail:  supportcp@cloud.rt.ru
 
     df = pd.DataFrame(list(rows), columns=fields)
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
-
-
-
+    df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
 
     topics = Topic.objects.all()
 
