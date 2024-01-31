@@ -124,7 +124,7 @@ E-mail:  supportcp@cloud.rt.ru
     sql = f"""
     SELECT * 
     FROM report.v_try_report
-    LIMIT 1000
+    LIMIT 30000
     """
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -145,6 +145,7 @@ E-mail:  supportcp@cloud.rt.ru
     df = pd.DataFrame(list(rows), columns=fields)
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
+    df['Описание оказанной консультации'] = df['Описание оказанной консультации'].str.replace('\n', ' ')
 
     topics = Topic.objects.all()
 
