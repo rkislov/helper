@@ -156,7 +156,7 @@ CELERY_BEAT_SCHEDULE = {
     #     "schedule": crontab(minute="*/1"),
     # },
     "sample_task2": {
-        "task": "helper.tasks.create_fullotchet",
+        "task": "helper.tasks.generate_fullotchet",
         "schedule": crontab(minute="5", hour="18"),
     },
 }
