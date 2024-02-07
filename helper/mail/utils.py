@@ -119,10 +119,10 @@ def create_fullotchet():
 E-mail:  supportcp@cloud.rt.ru
      """
 
-date = datetime.date.today().isoformat()
-date_for_otchet = f'{date} 18:00:00'
-print(date)
-print(date_for_otchet)
+    date = datetime.date.today().isoformat()
+    date_for_otchet = f'{date} 18:00:00'
+    print(date)
+    print(date_for_otchet)
     cursor = connect.cursor()
     sql = f"""
         SELECT  
