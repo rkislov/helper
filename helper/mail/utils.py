@@ -120,7 +120,7 @@ E-mail:  supportcp@cloud.rt.ru
      """
 
     date = datetime.date.today().isoformat()
-    date_for_otchet = datetime.now() + datetime.timedelta(hours=18)
+    date_for_otchet = datetime.date.today() + datetime.timedelta(hours=18)
     print(date)
     print(date_for_otchet)
     cursor = connect.cursor()
