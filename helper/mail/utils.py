@@ -122,8 +122,10 @@ E-mail:  supportcp@cloud.rt.ru
     date = datetime.date.today()
     time = datetime.time(18, 00)
     date_for_otchet = datetime.datetime.combine(date, time)
+    date_for_otchet2 = f'{date_for_otchet}'
     print(date)
     print(date_for_otchet)
+    print(date_for_otchet2)
     cursor = connect.cursor()
     sql = f"""
         SELECT  
@@ -135,7 +137,7 @@ E-mail:  supportcp@cloud.rt.ru
         WHERE  
          t.tid > 0 
          AND t.create_time >= '2024-02-01 00:00:00' 
-         AND t.create_time <= {date_for_otchet} 
+         AND t.create_time <= {date_for_otchet2} 
           
         LIMIT 30000
     """
