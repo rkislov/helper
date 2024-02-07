@@ -184,6 +184,7 @@ E-mail:  supportcp@cloud.rt.ru
             print(len(df))
 
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            df.index += 1
             df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
@@ -207,7 +208,7 @@ E-mail:  supportcp@cloud.rt.ru
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
-            ten_days_ago = today - datetime.timedelta(days=7)
+            ten_days_ago = today - datetime.timedelta(days=10)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
             filtered_counts = filtered_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
@@ -217,7 +218,8 @@ E-mail:  supportcp@cloud.rt.ru
             counts['10 дней'] = filtered_counts_10
             print(counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            servis_df.to_excel(writer, sheet_name='Заявки', index=False)
+            servis_df.index += 1
+            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п')
             counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
