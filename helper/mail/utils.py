@@ -138,6 +138,7 @@ E-mail:  supportcp@cloud.rt.ru
          t.tid > 0 
          AND t.create_time >= '2024-02-01 00:00:00' 
          AND t.create_time <= {date_for_otchet2} 
+         AND t.visibility = 'visible'
           
         LIMIT 30000
     """
