@@ -119,7 +119,7 @@ def create_fullotchet():
 
 Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
 Период от: 2023-05-16 00:00:00
-Период до: {date_for_otchet2}
+Период до: {date_for_otchet}
 
 Отчёт составлен автоматически.
 Вопросы по отчёту - taras.demchenko@rt.ru
@@ -138,7 +138,7 @@ def create_fullotchet():
         WHERE  
          t.tid > 0 
          AND t.create_time >= '2023-05-16 00:00:00' 
-         AND t.create_time <= {date_for_otchet} 
+         AND t.create_time <= {date_for_otchet2} 
          AND t.visibility = 'visible'
           
         LIMIT 30000
