@@ -111,22 +111,19 @@ def create_fullotchet():
                                password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
                                port=os.getenv("DBE_PORT"))
 
-
-
-
-    message = f"""Добрый день.
-Во вложении полный отчет по заявкам  на {datetime.date.today().isoformat()}
-
-
-Служба поддержки ЦП
-Телефон: 8-800-301-23-39
-E-mail:  supportcp@cloud.rt.ru
-     """
-
     date = datetime.date.today()
     time = datetime.time(18, 00)
     date_for_otchet = datetime.datetime.combine(date, time)
     date_for_otchet2 = f"'{date_for_otchet}'"
+    message = f"""Добрый вечер, коллеги!
+
+Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
+Период от: 2023-05-16 00:00:00
+Период до: {date_for_otchet2}
+
+Отчёт составлен автоматически.
+Вопросы по отчёту - taras.demchenko@rt.ru
+     """
     print(date)
     print(date_for_otchet)
     print(date_for_otchet2)
