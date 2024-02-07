@@ -138,7 +138,7 @@ def create_fullotchet():
         WHERE  
          t.tid > 0 
          AND t.create_time >= '2023-05-16 00:00:00' 
-         AND t.create_time <= {date_for_otchet2} 
+         AND t.create_time <= {date_for_otchet} 
          AND t.visibility = 'visible'
           
         LIMIT 30000
