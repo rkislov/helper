@@ -163,9 +163,9 @@ E-mail:  supportcp@cloud.rt.ru
 
     df = pd.DataFrame(list(rows), columns=fields)
     #df = pd.DataFrame(list(rows))
-    # df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
-    # df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
-    # df['Описание оказанной консультации'] = df['Описание оказанной консультации'].str.replace('\n', ' ')
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
+    df['Описание оказанной консультации'] = df['Описание оказанной консультации'].str.replace('\n', ' ')
 
     topics = Topic.objects.all()
 
@@ -190,42 +190,42 @@ E-mail:  supportcp@cloud.rt.ru
 
             worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
             workbook.close()
-        # else:
-        #     services = []
-        #     iterservices = topic.services.all()
-        #     for item in iterservices:
-        #         services.append(item.name)
-        #     servis_df = df.loc[df['Наименование подсистемы'].isin(services)]
-        #     print(servis_df)
-        #     print(len(servis_df.columns))
-        #     print(len(servis_df))
-        #     counts = servis_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame(name='Всего')
-        #     #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
-        #     today = datetime.datetime.now().date()
-        #     five_days_ago = today - datetime.timedelta(days=5)
-        #     ten_days_ago = today - datetime.timedelta(days=7)
-        #     filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
-        #     filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
-        #     filtered_counts = filtered_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
-        #     filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
-        #     print(counts)
-        #     counts['5 дней'] = filtered_counts
-        #     counts['10 дней'] = filtered_counts_10
-        #     print(counts)
-        #     writer = pd.ExcelWriter(path, engine='xlsxwriter')
-        #     servis_df.to_excel(writer, sheet_name='Заявки', index=False)
-        #     counts.to_excel(writer, sheet_name='Статистика')
-        #     workbook = writer.book
-        #     worksheet = writer.sheets['Заявки']
-        #     worksheet.autofit()
-        #     worksheet.freeze_panes(1, 0)
-        #     for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
-        #         worksheet.set_row(i, height)
-        #
-        #     worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
-        #     worksheet2 = writer.sheets['Статистика']
-        #     worksheet2.autofit()
-        #     workbook.close()
+        else:
+            services = []
+            iterservices = topic.services.all()
+            for item in iterservices:
+                services.append(item.name)
+            servis_df = df.loc[df['Наименование подсистемы'].isin(services)]
+            print(servis_df)
+            print(len(servis_df.columns))
+            print(len(servis_df))
+            counts = servis_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame(name='Всего')
+            #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
+            today = datetime.datetime.now().date()
+            five_days_ago = today - datetime.timedelta(days=5)
+            ten_days_ago = today - datetime.timedelta(days=7)
+            filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
+            filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
+            filtered_counts = filtered_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
+            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
+            print(counts)
+            counts['5 дней'] = filtered_counts
+            counts['10 дней'] = filtered_counts_10
+            print(counts)
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            servis_df.to_excel(writer, sheet_name='Заявки', index=False)
+            counts.to_excel(writer, sheet_name='Статистика')
+            workbook = writer.book
+            worksheet = writer.sheets['Заявки']
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
+            worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+            worksheet2 = writer.sheets['Статистика']
+            worksheet2.autofit()
+            workbook.close()
 
 
 
