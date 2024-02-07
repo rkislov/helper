@@ -119,9 +119,9 @@ def create_fullotchet():
 E-mail:  supportcp@cloud.rt.ru
      """
 
-    date = datetime.date.today().isoformat()
+    date = datetime.date.today()
     time = datetime.time(18, 00)
-    date_for_otchet = datetime.datetime.combine(date, time)
+    date_for_otchet = datetime.datetime.combine(date, time).isoformat()
     print(date)
     print(date_for_otchet)
     cursor = connect.cursor()
