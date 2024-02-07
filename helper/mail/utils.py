@@ -236,7 +236,7 @@ E-mail:  supportcp@cloud.rt.ru
         print(emails)
         print(filename)
 
-        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 
