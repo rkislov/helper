@@ -8,6 +8,7 @@ import xlsxwriter
 from mail.models import Region, Topic
 from helper.tasks import send_otchet_email_task
 import pandas as pd
+import time
 
 
 def generate_otchet(region_number):
@@ -64,7 +65,10 @@ E-mail:  supportcp@cloud.rt.ru
    AND t.ticket_state_id = ANY (ARRAY[1,15,14,4,6,13]) -- выбираем незакрытые                        
    ORDER BY t.id DESC   
    LIMIT 1000"""
+    start = time.time()
     cursor.execute(sql)
+    end = time.time() - start
+    print(end)
     rows = cursor.fetchall()
     print("Total rows are:  ", len(rows))
     path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
