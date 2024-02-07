@@ -179,7 +179,7 @@ E-mail:  supportcp@cloud.rt.ru
             print(len(df))
 
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            df.to_excel(writer, sheet_name='Заявки', index=False)
+            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
             worksheet.autofit()
