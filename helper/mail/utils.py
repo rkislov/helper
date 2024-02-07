@@ -188,7 +188,7 @@ E-mail:  supportcp@cloud.rt.ru
             for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
-            worksheet.autofilter(0, 0, len(df), len(df.columns) - 1)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
             workbook.close()
         else:
             services = []
