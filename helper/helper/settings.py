@@ -151,12 +151,8 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 CELERY_BEAT_SCHEDULE = {
-    # "sample_task": {
-    #     "task": "helper.tasks.check_email",
-    #     "schedule": crontab(minute="*/1"),
-    # },
-    "sample_task2": {
+    "sample_task": {
         "task": "helper.tasks.generate_fullotchet",
-        "schedule": crontab(minute="5", hour="18"),
+        "schedule": crontab(hour="18"),
     },
 }
