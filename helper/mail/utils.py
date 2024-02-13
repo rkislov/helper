@@ -280,7 +280,7 @@ def todb():
         LIMIT 30000
     """
     cursor.execute(sql)
-    rows = cursor.fetchall()
+    #rows = cursor.fetchall()
     print(rows[0])
     print("Total rows are:  ", len(rows))
 
@@ -297,8 +297,11 @@ def todb():
         'время: В работе', 'время: Отложенное исполнение', 'время: Ожидание клиента', 'время: На согласовании',
         'visibility'
     ]
-
-    df = pd.DataFrame(list(rows), columns=fields)
+    ro = ['12.02.2024', '18:06:51', '2024021200023', None, 'Никишенко С.В.', 'Республика Крым (91)', '', '', '91T015', 'Компонент: Компонент «Работа с базой данных»,\nДобрый день! При работе с инцидентами в меню РУИП, при загрузке файлов, нет\nдоступа к НСИ либо плачущий смайлик\nОбрабатываю инциденты\n', 'Инцидент', 'Низкий', 'НСИ', None, 'в работе', 'В процессе обработки обращения не было оставлено комментариев', None, '', '', '', '00:00:00', 'Портал', 27837, 7, 4, datetime.datetime(2024, 2, 12, 18, 6, 51), None, 'В работе', 'СПО НСИ Инцидент', '2-я линия техподдержки СПО НСИ', '48:00:00', '00:00:00', '00:00:00', '00:00:00', None, None, None, 'visible']
+    #array = []
+    #array.append(ro)
+    #df = pd.DataFrame(list(rows), columns=fields)
+    df = pd.DataFrame(list(ro), columns=fields)
     sqlstring = f'postgresql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST"):}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME_TIKETS")}'
     engine = create_engine(sqlstring)
     df.to_sql('table_name', engine, index=True, index_label='id', if_exists='append')
