@@ -279,7 +279,7 @@ def todb():
 
         LIMIT 30000
     """
-    cursor.execute(sql)
+    #cursor.execute(sql)
     #rows = cursor.fetchall()
     print(rows[0])
     print("Total rows are:  ", len(rows))
