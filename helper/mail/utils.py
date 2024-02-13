@@ -9,6 +9,7 @@ from mail.models import Region, Topic
 from helper.tasks import send_otchet_email_task
 import pandas as pd
 import time
+from sqlalchemy import create_engine
 
 
 def generate_otchet(region_number):
@@ -243,5 +244,62 @@ def create_fullotchet():
         send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
+def todb():
+    connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
+                               password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
+                               port=os.getenv("DBE_PORT"))
 
+    date = datetime.date.today()
+    time = datetime.time(18, 00)
+    date_for_otchet = datetime.datetime.combine(date, time)
+    date_for_otchet2 = f"'{date_for_otchet}'"
+    message = f"""Добрый вечер, коллеги!
+
+Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
+Период от: 2023-05-16 00:00:00
+Период до: {date_for_otchet}
+
+Отчёт составлен автоматически.
+Вопросы по отчёту - taras.demchenko@rt.ru
+     """
+    print(date)
+    print(date_for_otchet)
+    print(date_for_otchet2)
+    cursor = connect.cursor()
+    sql = f"""
+        SELECT  
+         *  
+
+        FROM  
+         report.v_try_source t 
+
+        WHERE  
+         t.tid > 0 
+         AND t.create_time >= '2023-05-16 00:00:00' 
+
+        LIMIT 30000
+    """
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    print(rows[0])
+    print("Total rows are:  ", len(rows))
+
+    fields = [
+        'Дата поступления', 'Время поступления', 'Номер обращения', 'Массовый инцидент',
+        'Заявитель(фамилия и инициалы)',
+        'Название субъекта РФ', 'Инициатор (фамилия и инициалы)', 'Компания инициатора', 'Номер СТД(КСА)',
+        'Текст обращения', 'Классификация обращения', 'Приоритет обращения', 'Наименование подсистемы',
+        'Исполнитель обращения',
+        'Текущий статус', 'Описание оказанной консультации', 'Необходимость модификации СПО', 'Номер листа внимания',
+        'дата закрытия', 'Время закрытия', 'Общее время обработки', 'Канал поступления', 'tid', 'service_id',
+        'ticket_state_id',
+        'create_time', 'exec_time', 'status', 'service', 'queue', 'SLA_norm', 'SLA_fact', 'время: Зарегистрирована',
+        'время: В работе', 'время: Отложенное исполнение', 'время: Ожидание клиента', 'время: На согласовании',
+        'visibility'
+    ]
+
+    df = pd.DataFrame(list(rows), columns=fields)
+    sqlstring = f"postgresql+psycopg2://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST"):}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME_TIKETS")}"
+    engine = create_engine(sqlstring)
+    df.to_sql('table_name', engine)
 
