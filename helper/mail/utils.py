@@ -299,7 +299,7 @@ def todb():
     ]
 
     df = pd.DataFrame(list(rows), columns=fields)
-    sqlstring = f"postgresql+psycopg2://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST"):}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME_TIKETS")}"
+    sqlstring = f"postgresql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST"):}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME_TIKETS")}"
     engine = create_engine(sqlstring)
     df.to_sql('table_name', engine)
 
