@@ -281,8 +281,8 @@ def todb():
     """
     #cursor.execute(sql)
     #rows = cursor.fetchall()
-    print(rows[0])
-    print("Total rows are:  ", len(rows))
+    # print(rows[0])
+    # print("Total rows are:  ", len(rows))
 
     fields = [
         'Дата поступления', 'Время поступления', 'Номер обращения', 'Массовый инцидент',
