@@ -301,7 +301,12 @@ def todb():
     #array = []
     #array.append(ro)
     #df = pd.DataFrame(list(rows), columns=fields)
-    sqlstring = f'postgresql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME_TIKETS")}'
+    host = os.getenv("DB_HOST")
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    dbname = os.getenv("DB_NAME_TIKETS")
+    port = os.getenv("DB_PORT")
+    sqlstring = f'postgresql://{user}:{password}@{host}:{port}/{dbname}'
     print(sqlstring)
     df = pd.DataFrame(ro)
     engine = create_engine(sqlstring)
