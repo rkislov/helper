@@ -245,6 +245,7 @@ def create_fullotchet():
 
 
 def todb():
+
     connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
                                password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
                                port=os.getenv("DBE_PORT"))
@@ -253,15 +254,7 @@ def todb():
     time = datetime.time(18, 00)
     date_for_otchet = datetime.datetime.combine(date, time)
     date_for_otchet2 = f"'{date_for_otchet}'"
-    message = f"""Добрый вечер, коллеги!
 
-Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
-Период от: 2023-05-16 00:00:00
-Период до: {date_for_otchet}
-
-Отчёт составлен автоматически.
-Вопросы по отчёту - taras.demchenko@rt.ru
-     """
     print(date)
     print(date_for_otchet)
     print(date_for_otchet2)
