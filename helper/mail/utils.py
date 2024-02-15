@@ -301,7 +301,7 @@ def todb():
     port2 = os.getenv("DB_PORT")
     sqlstring = f'postgresql://{username}:{password2}@{host}:{port2}/{dbname}'
     print(sqlstring)
-    df = pd.DataFrame(ro)
+    df = pd.DataFrame(list(ro))
     engine = create_engine(sqlstring)
     df.to_sql('tickets', con=engine, index=False, if_exists='append')
 
