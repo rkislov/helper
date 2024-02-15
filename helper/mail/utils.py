@@ -304,6 +304,6 @@ def todb():
     #df = pd.DataFrame(ro)
     engine = create_engine(sqlstring)
     print(df.head())
-    df.to_sql('tickets', con=engine, if_exists='append', index=False)
+    df.to_sql('tickets', con=engine, if_exists='replace', index=False)
 
 
