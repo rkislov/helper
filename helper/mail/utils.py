@@ -272,7 +272,7 @@ def create_fullotchet():
             elif fcitopic.slug == 'region':
                 writer = pd.ExcelWriter(path, engine='xlsxwriter')
                 workbook = writer.book
-                for i in range(00, 96):
+                for i in range(1, 96):
                     if i < 10:
                         r_number = f'0{i}'
                     else:
