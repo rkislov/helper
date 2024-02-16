@@ -193,11 +193,11 @@ def create_fullotchet():
             iterservices = topic.services.all()
             for item in iterservices:
                 services.append(item.name)
-            servis_df = df.loc[df['Наименование подсистемы'].isin(services)]
+            servis_df = df.loc[df['Наименование подсистемы/компонента'].isin(services)]
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
-            counts = servis_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame(name='Всего')
+            counts = servis_df.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame(name='Всего')
             #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
