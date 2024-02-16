@@ -238,104 +238,103 @@ def create_fullotchet():
 
         send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
-        dropfields = ['Инициатор (фамилия и инициалы)',
-              'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
-              'status', 'service', 'queue', 'SLA norm', 'SLA fact', 'время: Зарегистрирована', 'время: В работе', 'время: Отложенное исполнение',
-              'время: Ожидание клиента', 'время: На согласовании', 'visibility']
+    dropfields = ['Инициатор (фамилия и инициалы)',
+          'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
+          'status', 'service', 'queue', 'SLA norm', 'SLA fact', 'время: Зарегистрирована', 'время: В работе', 'время: Отложенное исполнение',
+          'время: Ожидание клиента', 'время: На согласовании', 'visibility']
 
-        df_to_fci = df.drop(columns=dropfields)
-        print(df_to_fci.head())
+    df_to_fci = df.drop(columns=dropfields)
+    print(df_to_fci.head())
 
-        fcitopics = FciTopic.objects.all()
-        print(fcitopics)
-        for fcitopic in fcitopics:
-            message2 = f"""
-Добрый день.
+    fcitopics = FciTopic.objects.all()
+    print(fcitopics)
+    for fcitopic in fcitopics:
+        message2 = f"""Добрый день.
 
 Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
 
 Служба технической поддержки Цифровой платформы
 E-mail: service-manager@cifro.tech
 АТСВ: 9272
-            """
-            filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
-            subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
-            path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
-            if fcitopic.slug == 'all':
-                print(df_to_fci)
-                print(len(df_to_fci.columns))
-                print(len(df_to_fci))
-                writer = pd.ExcelWriter(path, engine='xlsxwriter')
-                #df_to_fci.index += 1
-                df_to_fci.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
-                workbook = writer.book
-                worksheet = writer.sheets['Обращения']
+        """
+        filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
+        subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
+        path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
+        if fcitopic.slug == 'all':
+            print(df_to_fci)
+            print(len(df_to_fci.columns))
+            print(len(df_to_fci))
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            #df_to_fci.index += 1
+            df_to_fci.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+            workbook = writer.book
+            worksheet = writer.sheets['Обращения']
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
+            worksheet.autofilter(0, 1, len(df_to_fci), len(df_to_fci.columns))
+            workbook.close()
+        elif fcitopic.slug == 'region':
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            workbook = writer.book
+            for i in range(0, 89):
+                if i < 10:
+                    r_number = f'0{i}'
+                else:
+                    r_number = f'{i}'
+                #r_number = f'{i}'
+                print(r_number)
+                fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
+                fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
+                fci_servis_df_region_execl.index += 1
+                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
+                worksheet = writer.sheets[r_number]
                 worksheet.autofit()
                 worksheet.freeze_panes(1, 0)
-                for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
+                for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
                     worksheet.set_row(i, height)
 
-                worksheet.autofilter(0, 1, len(df_to_fci), len(df_to_fci.columns))
-                workbook.close()
-            elif fcitopic.slug == 'region':
-                writer = pd.ExcelWriter(path, engine='xlsxwriter')
-                workbook = writer.book
-                for i in range(0, 89):
-                    if i < 10:
-                        r_number = f'0{i}'
-                    else:
-                        r_number = f'{i}'
-                    #r_number = f'{i}'
-                    print(r_number)
-                    fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
-                    fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
-                    fci_servis_df_region_execl.index += 1
-                    fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
-                    worksheet = writer.sheets[r_number]
-                    worksheet.autofit()
-                    worksheet.freeze_panes(1, 0)
-                    for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
-                        worksheet.set_row(i, height)
+                worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
 
-                    worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
+            workbook.close()
 
-                workbook.close()
+        else:
+            fciservices = []
+            fciiterservices = fcitopic.services.all()
+            for item in fciiterservices:
+                fciservices.append(item.name)
+            fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(fciservices)]
+            print(fci_servis_df)
+            print(len(fci_servis_df.columns))
+            print(len(fci_servis_df))
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            fci_servis_df.index += 1
+            fci_servis_df.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+            workbook = writer.book
+            worksheet = writer.sheets['Обращения']
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            for i, height in enumerate([25] * fci_servis_df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
 
-            else:
-                fciservices = []
-                fciiterservices = fcitopic.services.all()
-                for item in fciiterservices:
-                    fciservices.append(item.name)
-                fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(fciservices)]
-                print(fci_servis_df)
-                print(len(fci_servis_df.columns))
-                print(len(fci_servis_df))
-                writer = pd.ExcelWriter(path, engine='xlsxwriter')
-                fci_servis_df.index += 1
-                fci_servis_df.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
-                workbook = writer.book
-                worksheet = writer.sheets['Обращения']
-                worksheet.autofit()
-                worksheet.freeze_panes(1, 0)
-                for i, height in enumerate([25] * fci_servis_df.shape[0]):  # устанавливаем высоту строк
-                    worksheet.set_row(i, height)
+            worksheet.autofilter(0, 1, len(fci_servis_df), len(fci_servis_df.columns))
 
-                worksheet.autofilter(0, 1, len(fci_servis_df), len(fci_servis_df.columns))
+            workbook.close()
 
-                workbook.close()
+        emails = []
+        fciiteremails = fcitopic.fcirecivers.all()
+        iiteremails = fcitopic.recivers.all()
+        print(iteremails[0])
+        for email in fciiteremails:
+            emails.append(email.email)
+        for email in iiteremails:
+            emails.append(email.email)
+        print(emails)
+        print(filename)
 
-            emails = []
-            fciiteremails = fcitopic.fcirecivers.all()
-            iiteremails = fcitopic.recivers.all()
-            print(iteremails[0])
-            for email in fciiteremails:
-                emails.append(email.email)
-            for email in iiteremails:
-                emails.append(email.email)
-            print(emails)
-            print(filename)
-
-            send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
 
 
 def todb():
