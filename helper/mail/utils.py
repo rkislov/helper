@@ -283,6 +283,7 @@ def create_fullotchet():
                     region_search.append(r_number)
                     int_region = int(r_number)
                     print(region_search)
+                    print(int_region)
                     fci_servis_df_region = df_to_fci.loc[df['region'] == int_region ]
                     fci_servis_df_region.index += 1
                     fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
