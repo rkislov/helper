@@ -5,7 +5,7 @@ from django.conf import settings as django_settings
 import os
 import datetime
 import xlsxwriter
-from mail.models import Region, Topic
+from mail.models import Region, Topic, FciTopic
 from helper.tasks import send_otchet_email_task
 import pandas as pd
 import time
@@ -245,6 +245,64 @@ def create_fullotchet():
 
         df_to_fci = df.drop(columns=dropfields)
         print(df_to_fci.head())
+
+        fcitopics = FciTopic.objects.all()
+        for fcitopic in fcitopics:
+
+            filename = f"Журнал обращений пользователей {fcitopics.name} на {datetime.date.today().isoformat()}.xlsx"
+            subject = f"ЦП.Журнал обращений пользователей {fcitopics.name} на {datetime.date.today().isoformat()}"
+            path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
+            if fcitopic.slug == 'all':
+                print(df_to_fci)
+                print(len(df_to_fci.columns))
+                print(len(df_to_fci))
+                writer = pd.ExcelWriter(path, engine='xlsxwriter')
+                df_to_fci.index += 1
+                df_to_fci.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+                workbook = writer.book
+                worksheet = writer.sheets['Обращения']
+                worksheet.autofit()
+                worksheet.freeze_panes(1, 0)
+                for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
+                    worksheet.set_row(i, height)
+
+                worksheet.autofilter(0, 1, len(df), len(df.columns))
+                workbook.close()
+            else:
+                fciservices = []
+                fciiterservices = fcitopic.services.all()
+                for item in fciiterservices:
+                    fciservices.append(item.name)
+                fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(services)]
+                print(fci_servis_df)
+                print(len(fci_servis_df.columns))
+                print(len(fci_servis_df))
+                writer = pd.ExcelWriter(path, engine='xlsxwriter')
+                fci_servis_df.index += 1
+                fci_servis_df.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+                workbook = writer.book
+                worksheet = writer.sheets['Обращения']
+                worksheet.autofit()
+                worksheet.freeze_panes(1, 0)
+                for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
+                    worksheet.set_row(i, height)
+
+                worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+
+                workbook.close()
+
+            emails = []
+            fciiteremails = fcitopic.fcirecivers.all()
+            iiteremails = fcitopic.recivers.all()
+            print(iteremails[0])
+            for email in fciiteremails:
+                emails.append(email.email)
+            for email in iiteremails:
+                emails.append(email.email)
+            print(emails)
+            print(filename)
+
+            send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
 
 def todb():
