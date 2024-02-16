@@ -221,7 +221,7 @@ def create_fullotchet():
             for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
-            worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+            worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
             worksheet2 = writer.sheets['Статистика']
             worksheet2.autofit()
             workbook.close()
@@ -267,8 +267,32 @@ def create_fullotchet():
                 for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
                     worksheet.set_row(i, height)
 
-                worksheet.autofilter(0, 1, len(df), len(df.columns))
+                worksheet.autofilter(0, 1, len(df_to_fci), len(df_to_fci.columns))
                 workbook.close()
+            elif fcitopic.slug == 'region':
+                writer = pd.ExcelWriter(path, engine='xlsxwriter')
+                workbook = writer.book
+                for i in range(0, 96):
+                    if i < 10:
+                        r_number = f'0{i}'
+                    else:
+                        r_number = f'{i}'
+                    print(r_number)
+                    fci_servis_df_region = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(r_number)]
+                    fci_servis_df_region.index += 1
+                    fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
+                    fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
+                    worksheet = writer.sheets['Заявки']
+                    worksheet.autofit()
+                    worksheet.freeze_panes(1, 0)
+                    for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
+                        worksheet.set_row(i, height)
+
+                    worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
+
+                workbook.close()
+
+
             else:
                 fciservices = []
                 fciiterservices = fcitopic.services.all()
@@ -288,7 +312,7 @@ def create_fullotchet():
                 for i, height in enumerate([25] * fci_servis_df.shape[0]):  # устанавливаем высоту строк
                     worksheet.set_row(i, height)
 
-                worksheet.autofilter(0, 0, len(fci_servis_df), len(fci_servis_df.columns) - 1)
+                worksheet.autofilter(0, 1, len(fci_servis_df), len(fci_servis_df.columns))
 
                 workbook.close()
 
