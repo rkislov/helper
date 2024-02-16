@@ -266,7 +266,7 @@ E-mail: service-manager@cifro.tech
                 print(len(df_to_fci.columns))
                 print(len(df_to_fci))
                 writer = pd.ExcelWriter(path, engine='xlsxwriter')
-                df_to_fci.index += 1
+                #df_to_fci.index += 1
                 df_to_fci.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
                 workbook = writer.book
                 worksheet = writer.sheets['Обращения']
@@ -280,7 +280,7 @@ E-mail: service-manager@cifro.tech
             elif fcitopic.slug == 'region':
                 writer = pd.ExcelWriter(path, engine='xlsxwriter')
                 workbook = writer.book
-                for i in range(0, 96):
+                for i in range(0, 89):
                     if i < 10:
                         r_number = f'0{i}'
                     else:
@@ -300,7 +300,6 @@ E-mail: service-manager@cifro.tech
                     worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
 
                 workbook.close()
-
 
             else:
                 fciservices = []
