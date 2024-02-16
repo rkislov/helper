@@ -272,11 +272,12 @@ def create_fullotchet():
             elif fcitopic.slug == 'region':
                 writer = pd.ExcelWriter(path, engine='xlsxwriter')
                 workbook = writer.book
-                for i in range(0, 96):
-                    if i < 10:
-                        r_number = f'0{i}'
-                    else:
-                        r_number = f'{i}'
+                for i in range(00, 96):
+                    # if i < 10:
+                    #     r_number = f'0{i}'
+                    # else:
+                    #     r_number = f'{i}'
+                    r_number = f'{i}'
                     print(r_number)
                     fci_servis_df_region = df_to_fci.query(f"region == {r_number}")
                     fci_servis_df_region.index += 1
