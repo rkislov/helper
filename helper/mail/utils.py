@@ -204,8 +204,8 @@ def create_fullotchet():
             ten_days_ago = today - datetime.timedelta(days=10)
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
-            filtered_counts = filtered_df.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
-            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы')['Текущий статус'].value_counts().to_frame()
+            filtered_counts = filtered_df.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame()
+            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame()
             print(counts)
             counts['5 дней'] = filtered_counts
             counts['10 дней'] = filtered_counts_10
