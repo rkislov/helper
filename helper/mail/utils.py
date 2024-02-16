@@ -250,8 +250,8 @@ def create_fullotchet():
         print(fcitopics)
         for fcitopic in fcitopics:
 
-            filename = f"Журнал обращений пользователей {fcitopics.name} на {datetime.date.today().isoformat()}.xlsx"
-            subject = f"ЦП.Журнал обращений пользователей {fcitopics.name} на {datetime.date.today().isoformat()}"
+            filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
+            subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
             path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
             if fcitopic.slug == 'all':
                 print(df_to_fci)
