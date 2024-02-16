@@ -285,10 +285,10 @@ def create_fullotchet():
                 worksheet = writer.sheets['Обращения']
                 worksheet.autofit()
                 worksheet.freeze_panes(1, 0)
-                for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
+                for i, height in enumerate([25] * fci_servis_df.shape[0]):  # устанавливаем высоту строк
                     worksheet.set_row(i, height)
 
-                worksheet.autofilter(0, 0, len(servis_df), len(servis_df.columns) - 1)
+                worksheet.autofilter(0, 0, len(fci_servis_df), len(fci_servis_df.columns) - 1)
 
                 workbook.close()
 
