@@ -58,3 +58,35 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class FciReciver(models.Model):
+    email = models.EmailField()
+    description = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Получатель ФЦИ"
+        verbose_name_plural = "Получатели ФЦИ"
+
+
+    def __str__(self):
+        return self.email
+
+
+class FciTopic(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    services = models.ManyToManyField(Service, related_name="fcitopics")
+    recivers = models.ManyToManyField(Reciver, related_name="fcitopics", blank=True)
+    fcirecivers = models.ManyToManyField(FciReciver, related_name="fcitopics", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Тема ФЦИ"
+        verbose_name_plural = "Темы ФЦИ"
+
+    def __str__(self):
+        return self.name

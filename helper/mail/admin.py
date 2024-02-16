@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.http.response import HttpResponseRedirect
 from django.core.management import call_command
 from django.urls import path
-from .models import Region, Reciver, Service, Topic
+from .models import Region, Reciver, Service, Topic, FciTopic, FciReciver
 
 
 class RegionAdmin(admin.ModelAdmin):
@@ -41,7 +41,20 @@ class TopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
+class FciReciverAdmin(admin.ModelAdmin):
+    list_display = ['id', 'email', 'description']
+    search_fields = ['id', 'email', 'description']
+
+
+class FciTopicAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'slug']
+    search_fields = ['id', 'name', 'slug']
+    prepopulated_fields = {"slug": ("name",)}
+
+
 admin.site.register(Region, RegionAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Reciver, ReciverAdmin)
 admin.site.register(Topic, TopicAdmin)
+admin.site.register(FciReciver, FciReciverAdmin)
+admin.site.register(FciTopic, FciTopicAdmin)
