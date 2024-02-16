@@ -250,13 +250,13 @@ def create_fullotchet():
         print(fcitopics)
         for fcitopic in fcitopics:
             message2 = f"""
-            Добрый день.
+Добрый день.
 
-            Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
+Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
 
-            Служба технической поддержки Цифровой платформы
-            E-mail: service-manager@cifro.tech
-            АТСВ: 9272
+Служба технической поддержки Цифровой платформы
+E-mail: service-manager@cifro.tech
+АТСВ: 9272
             """
             filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
             subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
@@ -287,16 +287,11 @@ def create_fullotchet():
                         r_number = f'{i}'
                     #r_number = f'{i}'
                     print(r_number)
-                    region_search = []
-                    region_search.append(r_number)
-                    int_region = '{:02}'.format(int(r_number))
-                    print(region_search)
-                    print(int_region)
                     fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
                     fci_servis_df_region.index += 1
                     fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                     fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
-                    worksheet = writer.sheets[r_number]
+                    worksheet = writer.sheets['${r_number}']
                     worksheet.autofit()
                     worksheet.freeze_panes(1, 0)
                     for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
