@@ -282,7 +282,7 @@ def create_fullotchet():
                     fci_servis_df_region.index += 1
                     fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                     fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
-                    worksheet = writer.sheets['Заявки']
+                    worksheet = writer.sheets[r_number]
                     worksheet.autofit()
                     worksheet.freeze_panes(1, 0)
                     for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
