@@ -278,7 +278,7 @@ def create_fullotchet():
                     else:
                         r_number = f'{i}'
                     print(r_number)
-                    fci_servis_df_region = df_to_fci.loc[df['region'].isin(r_number)]
+                    fci_servis_df_region = df_to_fci.query(f"region == {r_number}")
                     fci_servis_df_region.index += 1
                     fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                     fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
