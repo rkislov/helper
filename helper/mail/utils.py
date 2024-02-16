@@ -274,7 +274,7 @@ def create_fullotchet():
                 fciiterservices = fcitopic.services.all()
                 for item in fciiterservices:
                     fciservices.append(item.name)
-                fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(services)]
+                fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(fciservices)]
                 print(fci_servis_df)
                 print(len(fci_servis_df.columns))
                 print(len(fci_servis_df))
