@@ -236,7 +236,7 @@ def create_fullotchet():
         print(emails)
         print(filename)
 
-        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
         dropfields = ['Инициатор (фамилия и инициалы)',
               'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
