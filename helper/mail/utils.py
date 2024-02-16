@@ -247,6 +247,7 @@ def create_fullotchet():
         print(df_to_fci.head())
 
         fcitopics = FciTopic.objects.all()
+        print(fcitopics)
         for fcitopic in fcitopics:
 
             filename = f"Журнал обращений пользователей {fcitopics.name} на {datetime.date.today().isoformat()}.xlsx"
