@@ -130,17 +130,15 @@ def create_fullotchet():
     print(date_for_otchet2)
     cursor = connect.cursor()
     sql = f"""
-        SELECT  
-         *  
-          
-        FROM  
-         report.v_try_source t 
-          
-        WHERE  
-         t.tid > 0 
-         AND t.create_time >= '2023-05-16 00:00:00' 
-         AND t.create_time <= {date_for_otchet2} 
-         AND t.visibility = 'visible'
+       SELECT  
+     * 
+    FROM  
+     report.v_try_source_v2 t 
+      
+    WHERE   
+     t.visibility = 'visible' 
+     AND t.create_time >= '2023-12-14 00:00:00'  
+     AND t.create_time <= '2024-02-15 18:00:00'
           
         LIMIT 30000
     """
@@ -149,16 +147,11 @@ def create_fullotchet():
     print(rows[0])
     print("Total rows are:  ", len(rows))
 
-
-
-    fields = [
-              'Дата поступления', 'Время поступления', 'Номер обращения', 'Массовый инцидент', 'Заявитель(фамилия и инициалы)',
-              'Название субъекта РФ', 'Инициатор (фамилия и инициалы)', 'Компания инициатора', 'Номер СТД(КСА)',
-              'Текст обращения', 'Классификация обращения', 'Приоритет обращения', 'Наименование подсистемы', 'Исполнитель обращения',
-              'Текущий статус', 'Описание оказанной консультации', 'Необходимость модификации СПО', 'Номер листа внимания',
-              'дата закрытия', 'Время закрытия', 'Общее время обработки', 'Канал поступления', 'tid', 'service_id', 'ticket_state_id',
-              'create_time', 'exec_time', 'status', 'service', 'queue', 'SLA_norm', 'SLA_fact', 'время: Зарегистрирована',
-              'время: В работе', 'время: Отложенное исполнение', 'время: Ожидание клиента', 'время: На согласовании', 'visibility'
+    fields = ['Дата поступления','Время поступления', 'Способ подачи обращения', 'Номер обращения', 'Заявитель (фамилия и инициалы)',
+              'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения', 'Приоритет обращения',
+              'Наименование подсистемы/компонента', 'Исполнитель обращения (фамилия и инициалы)', 'Текущий статус',
+              'Описание оказанной консультации или решения по обращению', 'Необходимость модификации СПО (да/нет)',
+              'Номер листа внимания', 'дата закрытия', 'Время закрытия', 'Общее время обработки', 'region'
               ]
 
     fields2 =['Статус', 'Количество']
@@ -241,7 +234,15 @@ def create_fullotchet():
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+
+        dropfields = ['Инициатор (фамилия и инициалы)',
+              'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
+              'status', 'service', 'queue', 'SLA norm', 'SLA fact', 'время: Зарегистрирована', 'время: В работе', 'время: Отложенное исполнение',
+              'время: Ожидание клиента', 'время: На согласовании', 'visibility']
+
+        df_to_fci = df.drop(columns=dropfields)
+        print(df_to_fci.head())
 
 
 def todb():
