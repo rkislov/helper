@@ -249,7 +249,15 @@ def create_fullotchet():
         fcitopics = FciTopic.objects.all()
         print(fcitopics)
         for fcitopic in fcitopics:
+            message2 = f"""
+            Добрый день.
 
+            Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
+
+            Служба технической поддержки Цифровой платформы
+            E-mail: service-manager@cifro.tech
+            АТСВ: 9272
+            """
             filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
             subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
             path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
@@ -333,7 +341,7 @@ def create_fullotchet():
             print(emails)
             print(filename)
 
-            send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+            send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
 
 
 def todb():
