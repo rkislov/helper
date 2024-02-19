@@ -188,7 +188,7 @@ def create_fullotchet():
 
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('H:H', 70, wrap_format)
+            worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             workbook.close()
         else:
@@ -226,7 +226,7 @@ def create_fullotchet():
 
             worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('H:H', 70, wrap_format)
+            worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             worksheet2 = writer.sheets['Статистика']
             worksheet2.autofit()
@@ -283,7 +283,7 @@ E-mail: service-manager@cifro.tech
 
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('H:H', 70, wrap_format)
+            worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             workbook.close()
         elif fcitopic.slug == 'region':
@@ -308,7 +308,7 @@ E-mail: service-manager@cifro.tech
 
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
                 wrap_format = workbook.add_format({'text_wrap': True})
-                worksheet.set_column('H:H', 70, wrap_format)
+                worksheet.set_column('I:I', 70, wrap_format)
                 worksheet.set_column('O:O', 70, wrap_format)
             workbook.close()
 
@@ -334,7 +334,7 @@ E-mail: service-manager@cifro.tech
 
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('H:H', 70, wrap_format)
+            worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
 
             workbook.close()
