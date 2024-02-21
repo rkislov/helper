@@ -410,7 +410,7 @@ def todb():
     username = os.getenv("DB_USER")
     password2 = os.getenv("DB_PASSWORD")
     dbname = os.getenv("DB_NAME_TIKETS")
-    port2 = os.getenv("DB_PORT")там
+    port2 = os.getenv("DB_PORT")
     sqlstring = f'postgresql://{username}:{password2}@{host}:{port2}/{dbname}'
     print(sqlstring)
     #df = pd.DataFrame(ro)
