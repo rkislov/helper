@@ -377,7 +377,9 @@ def todb():
 
         WHERE  
          t.tid > 0 
-         AND t.create_time >= '2023-05-16 00:00:00' 
+         t.visibility = 'visible'
+         AND t.create_time >= '2023-05-16 00:00:00'
+         AND t.create_time <= {date_for_otchet2}
 
         LIMIT 30000
     """
@@ -406,8 +408,8 @@ def todb():
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], dayfirst=True)
     print(newdf.head())
     print(newdf.tail())
-    print('основной массив ' + df.count())
-    print('урезанный массив ' + newdf.count())
+    print('основной массив ', df.count())
+    print('урезанный массив ', newdf.count())
     host = os.getenv("DB_HOST")
     username = os.getenv("DB_USER")
     password2 = os.getenv("DB_PASSWORD")
