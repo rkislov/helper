@@ -376,7 +376,6 @@ def todb():
          report.v_try_source_v2 t 
 
         WHERE  
-         t.tid > 0 
          t.visibility = 'visible'
          AND t.create_time >= '2023-05-16 00:00:00'
          AND t.create_time <= {date_for_otchet2}
