@@ -403,6 +403,10 @@ def todb():
     #array = []
     #array.append(ro)
     df = pd.DataFrame(list(rows), columns=fields)
+    print(df.head())
+    print(df.tail())
+    df['поступления'] = pd.to_datetime(df['поступления'], dayfirst=True)
+
     host = os.getenv("DB_HOST")
     username = os.getenv("DB_USER")
     password2 = os.getenv("DB_PASSWORD")
@@ -413,6 +417,6 @@ def todb():
     #df = pd.DataFrame(ro)
     engine = create_engine(sqlstring)
     print(df.head())
-    df.to_sql('tickets', con=engine, if_exists='replace', index=False)
+    #df.to_sql('tickets', con=engine, if_exists='replace', index=False)
 
 
