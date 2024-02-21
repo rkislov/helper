@@ -406,7 +406,7 @@ def todb():
     print(df.head())
     print(df.tail())
     newdf = df[df['create_time'] >= '2023-12-14 00:00:00']
-    df['поступления'] = pd.to_datetime(df['поступления'], dayfirst=True)
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], dayfirst=True)
     print(newdf.head())
     print(newdf.tail())
     host = os.getenv("DB_HOST")
