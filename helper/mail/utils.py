@@ -406,6 +406,8 @@ def todb():
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], dayfirst=True)
     print(newdf.head())
     print(newdf.tail())
+    print('основной массив ' + df.count())
+    print('урезанный массив ' + newdf.count())
     host = os.getenv("DB_HOST")
     username = os.getenv("DB_USER")
     password2 = os.getenv("DB_PASSWORD")
