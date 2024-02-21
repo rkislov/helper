@@ -405,8 +405,10 @@ def todb():
     df = pd.DataFrame(list(rows), columns=fields)
     print(df.head())
     print(df.tail())
+    newdf = df[df['create_time'] >= '2023-12-14 00:00:00']
     df['поступления'] = pd.to_datetime(df['поступления'], dayfirst=True)
-
+    print(newdf.head())
+    print(newdf.tail())
     host = os.getenv("DB_HOST")
     username = os.getenv("DB_USER")
     password2 = os.getenv("DB_PASSWORD")
