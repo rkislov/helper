@@ -138,7 +138,7 @@ def create_fullotchet():
     WHERE   
      t.visibility = 'visible' 
      AND t.create_time >= '2023-12-14 00:00:00'  
-     AND t.create_time <= '2024-02-15 18:00:00'
+     AND t.create_time <= {date_for_otchet2}
           
         LIMIT 30000
     """
@@ -249,8 +249,10 @@ def create_fullotchet():
           'status', 'service', 'queue', 'SLA norm', 'SLA fact', 'время: Зарегистрирована', 'время: В работе', 'время: Отложенное исполнение',
           'время: Ожидание клиента', 'время: На согласовании', 'visibility']
 
-    df_to_fci = df.drop(columns=dropfields)
+    newdf = df[df['create_time'] >= '2023-12-14 00:00:00']
+    df_to_fci = newdf.drop(columns=dropfields)
     print(df_to_fci.head())
+    print(df_to_fci.tail())
 
     fcitopics = FciTopic.objects.all()
     print(fcitopics)
