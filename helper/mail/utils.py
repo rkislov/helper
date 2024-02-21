@@ -373,7 +373,7 @@ def todb():
          *  
 
         FROM  
-         report.v_try_source t 
+         report.v_try_source_v2 t 
 
         WHERE  
          t.tid > 0 
