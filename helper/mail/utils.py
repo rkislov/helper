@@ -320,13 +320,14 @@ E-mail: service-manager@cifro.tech
             fciiterservices = fcitopic.services.all()
             for item in fciiterservices:
                 fciservices.append(item.name)
+            print(fciservices)
             fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(fciservices)]
             print(fci_servis_df)
             print(len(fci_servis_df.columns))
             print(len(fci_servis_df))
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             #fci_servis_df.index += 1
-            df_to_fci_region_execl = df_to_fci.drop(columns=['region'])
+            df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
             df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
