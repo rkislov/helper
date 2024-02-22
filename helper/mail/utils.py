@@ -117,7 +117,7 @@ def create_fullotchet():
     time = datetime.time(18, 00)
     date_for_otchet = datetime.datetime.combine(date, time)
     date_for_otchet2 = f"'{date_for_otchet}'"
-    message = f"""Добрый вечер, коллеги!
+    message = f"""Добрый день, коллеги!
 
 Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
 Период от: 2023-05-16 00:00:00
@@ -261,7 +261,7 @@ def create_fullotchet():
     for fcitopic in fcitopics:
         message2 = f"""Добрый день.
 
-Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
+Во вложении Журнал обращений пользователей ЦП ({fcitopic.name}) на  {date_for_otchet}
 
 Служба технической поддержки Цифровой платформы
 E-mail: service-manager@cifro.tech
