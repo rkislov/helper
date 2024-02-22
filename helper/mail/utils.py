@@ -169,8 +169,8 @@ def create_fullotchet():
 
     for topic in topics:
 
-        filename = f"{topic.slug}-{datetime.date.today().isoformat()}.xlsx"
-        subject = f"{topic.slug}-{datetime.date.today().isoformat()}"
+        filename = f"{topic.slug}-{date}.xlsx"
+        subject = f"{topic.slug}-{date}"
         path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
         if topic.slug == 'all':
             print(df)
@@ -267,8 +267,8 @@ def create_fullotchet():
 E-mail: service-manager@cifro.tech
 АТСВ: 9272
         """
-        filename = f"Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}.xlsx"
-        subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {datetime.date.today().isoformat()}"
+        filename = f"Журнал обращений пользователей {fcitopic.name} на {date}.xlsx"
+        subject = f"ЦП.Журнал обращений пользователей {fcitopic.name} на {date}"
         path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
         if fcitopic.slug == 'all':
             print(df_to_fci)
