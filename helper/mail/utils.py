@@ -118,9 +118,9 @@ def create_fullotchet():
     date_for_otchet2 = f"'{date_for_otchet}'"
     message = f"""Добрый вечер, коллеги!
 
-Во вложении уточненный общий отчёт по заявкам, которые идут в отчёт заказчику.
+Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
 Период от: 2023-05-16 00:00:00
-Период до: 2024-02-21 18:00:00
+Период до: {date_for_otchet}
 
 Отчёт составлен автоматически.
 Вопросы по отчёту - taras.demchenko@rt.ru
@@ -138,7 +138,7 @@ def create_fullotchet():
     WHERE   
      t.visibility = 'visible' 
      AND t.create_time >= '2023-05-16 00:00:00'  
-     AND t.create_time <= '2024-02-21 18:00:00'
+     AND t.create_time <= {date_for_otchet2}
           
         LIMIT 30000
     """
@@ -260,7 +260,7 @@ def create_fullotchet():
     for fcitopic in fcitopics:
         message2 = f"""Добрый день.
 
-Во вложении уточненный Журнал обращений пользователей({fcitopic.name}) на  2024-02-21 18:00:00
+Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
 
 Служба технической поддержки Цифровой платформы
 E-mail: service-manager@cifro.tech
