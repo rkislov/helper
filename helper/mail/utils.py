@@ -242,7 +242,7 @@ def create_fullotchet():
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     dropfields = ['Инициатор (фамилия и инициалы)',
           'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
@@ -251,7 +251,7 @@ def create_fullotchet():
 
     newdf = df[df['create_time'] >= '2023-12-14 00:00:00']
     df_to_fci = newdf.drop(columns=dropfields)
-    print("новый массив",len(df_to_fci.columns))
+    print("новый массив",len(df_to_fci))
     print(df_to_fci.head())
     print(df_to_fci.tail())
 
