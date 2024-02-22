@@ -118,9 +118,9 @@ def create_fullotchet():
     date_for_otchet2 = f"'{date_for_otchet}'"
     message = f"""Добрый вечер, коллеги!
 
-Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
+Во вложении уточненный общий отчёт по заявкам, которые идут в отчёт заказчику.
 Период от: 2023-05-16 00:00:00
-Период до: {date_for_otchet}
+Период до: 2024-02-21 18:00:00
 
 Отчёт составлен автоматически.
 Вопросы по отчёту - taras.demchenko@rt.ru
@@ -138,7 +138,7 @@ def create_fullotchet():
     WHERE   
      t.visibility = 'visible' 
      AND t.create_time >= '2023-05-16 00:00:00'  
-     AND t.create_time <= {date_for_otchet2}
+     AND t.create_time <= '2024-02-21 18:00:00'
           
         LIMIT 30000
     """
@@ -242,7 +242,7 @@ def create_fullotchet():
         print(emails)
         print(filename)
 
-        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     dropfields = ['Инициатор (фамилия и инициалы)',
           'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
@@ -260,7 +260,7 @@ def create_fullotchet():
     for fcitopic in fcitopics:
         message2 = f"""Добрый день.
 
-Во вложении Журнал обращений пользователей({fcitopic.name}) на  {date_for_otchet}
+Во вложении уточненный Журнал обращений пользователей({fcitopic.name}) на  2024-02-21 18:00:00
 
 Служба технической поддержки Цифровой платформы
 E-mail: service-manager@cifro.tech
@@ -353,7 +353,7 @@ E-mail: service-manager@cifro.tech
         print(emails)
         print(filename)
 
-        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
 
 
 def todb():
