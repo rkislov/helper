@@ -12,6 +12,7 @@ import time
 from sqlalchemy import create_engine
 
 
+
 def generate_otchet(region_number):
     region = Region.objects.filter(region_number=region_number).first()
 
@@ -112,7 +113,7 @@ def create_fullotchet():
                                password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
                                port=os.getenv("DBE_PORT"))
 
-    date = datetime.date.today()
+    date = datetime.date.today() - datetime.timedelta(days = 1)
     time = datetime.time(18, 00)
     date_for_otchet = datetime.datetime.combine(date, time)
     date_for_otchet2 = f"'{date_for_otchet}'"
@@ -242,7 +243,7 @@ def create_fullotchet():
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     dropfields = ['Инициатор (фамилия и инициалы)',
           'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time',
@@ -354,7 +355,7 @@ E-mail: service-manager@cifro.tech
         print(emails)
         print(filename)
 
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
+        #send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
 
 
 def todb():
