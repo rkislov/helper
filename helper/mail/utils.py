@@ -230,7 +230,7 @@ def create_fullotchet():
             servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1,0))
             counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
-
+            worksheet = writer.sheets['Заявки']
             for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
