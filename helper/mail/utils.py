@@ -183,14 +183,21 @@ def create_fullotchet():
 
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df.index += 1
-            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п')
+            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1,0))
             workbook = writer.book
+
             worksheet = writer.sheets['Заявки']
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
+
             for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
+            cell_fromat = workbook.add_format({
+                "align": "right",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
             worksheet.set_column('I:I', 70, wrap_format)
@@ -220,19 +227,25 @@ def create_fullotchet():
             print(counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.index += 1
-            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п')
+            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1,0))
             counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
-            worksheet = writer.sheets['Заявки']
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
+
             for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
-            worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
+            cell_fromat = workbook.add_format({
+                "align": "right",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
+            worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
             worksheet2 = writer.sheets['Статистика']
             worksheet2.autofit()
             workbook.close()
@@ -281,18 +294,25 @@ E-mail: service-manager@cifro.tech
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             #df_to_fci.index += 1
             df_to_fci_region_execl = df_to_fci.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
+
             for i, height in enumerate([25] * df_to_fci_region_execl.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
-            worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
+            cell_fromat = workbook.add_format({
+                "align": "right",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
+            worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
             workbook.close()
         elif fcitopic.slug == 'region':
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
@@ -307,17 +327,25 @@ E-mail: service-manager@cifro.tech
                 fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
                 fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                 #fci_servis_df_region_execl.index += 1
-                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п')
+                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1,0))
                 worksheet = writer.sheets[r_number]
-                worksheet.autofit()
-                worksheet.freeze_panes(1, 0)
+
                 for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
                     worksheet.set_row(i, height)
 
-                worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
+                cell_fromat = workbook.add_format({
+                    "align": "right",
+                    "valign": "top",
+                })
+                worksheet.set_column(0, len(df.columns), None, cell_fromat)
+                worksheet.autofit()
+                worksheet.freeze_panes(1, 0)
+                worksheet.autofilter(0, 1, len(df), len(df.columns))
                 wrap_format = workbook.add_format({'text_wrap': True})
                 worksheet.set_column('I:I', 70, wrap_format)
                 worksheet.set_column('O:O', 70, wrap_format)
+                worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
+
             workbook.close()
 
         else:
@@ -333,18 +361,25 @@ E-mail: service-manager@cifro.tech
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             #fci_servis_df.index += 1
             df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п')
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
+
             for i, height in enumerate([25] * df_to_fci_region_execl.shape[0]):  # устанавливаем высоту строк
                 worksheet.set_row(i, height)
 
-            worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
+            cell_fromat = workbook.add_format({
+                "align": "right",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
+            worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
 
             workbook.close()
 
