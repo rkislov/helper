@@ -192,7 +192,7 @@ def create_fullotchet():
                 worksheet.set_row(i, height)
 
             cell_fromat = workbook.add_format({
-                "align": "right",
+                "align": "left",
                 "valign": "top",
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
@@ -235,7 +235,7 @@ def create_fullotchet():
                 worksheet.set_row(i, height)
 
             cell_fromat = workbook.add_format({
-                "align": "right",
+                "align": "left",
                 "valign": "top",
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
@@ -302,7 +302,7 @@ E-mail: service-manager@cifro.tech
                 worksheet.set_row(i, height)
 
             cell_fromat = workbook.add_format({
-                "align": "right",
+                "align": "left",
                 "valign": "top",
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
@@ -334,7 +334,7 @@ E-mail: service-manager@cifro.tech
                     worksheet.set_row(i, height)
 
                 cell_fromat = workbook.add_format({
-                    "align": "right",
+                    "align": "left",
                     "valign": "top",
                 })
                 worksheet.set_column(0, len(df.columns), None, cell_fromat)
@@ -369,7 +369,7 @@ E-mail: service-manager@cifro.tech
                 worksheet.set_row(i, height)
 
             cell_fromat = workbook.add_format({
-                "align": "right",
+                "align": "left",
                 "valign": "top",
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
