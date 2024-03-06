@@ -20,6 +20,11 @@ def generate_fullotchet():
     call_command("fullotchet", )
 
 
+@shared_task
+def generate_fullotchet_podryad():
+    call_command("fullotchetpodryad", )
+
+
 @shared_task()
 def send_otchet_email_task(email_address, subject, from_email, message, filename):
     print(email_address, subject, from_email, message, filename)
