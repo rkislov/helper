@@ -161,7 +161,7 @@ def create_fullotchet():
 
     df = pd.DataFrame(list(rows), columns=fields)
     #df = pd.DataFrame(list(rows))
-    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    #df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
@@ -252,7 +252,7 @@ E-mail: service-manager@cifro.tech
                 worksheet.freeze_panes(1, 0)
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
                 wrap_format = workbook.add_format({'text_wrap': True})
-                worksheet.set_column('B:B', None, cell_fromat)
+                #worksheet.set_column('B:B', None, cell_fromat)
                 worksheet.set_column('I:I', 70, wrap_format)
                 worksheet.set_column('O:O', 70, wrap_format)
 
@@ -288,7 +288,7 @@ E-mail: service-manager@cifro.tech
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
+            #worksheet.set_column('B:B', None, cell_fromat)
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
@@ -367,7 +367,7 @@ def create_fullotchet_podryad():
 
     df = pd.DataFrame(list(rows), columns=fields)
     # df = pd.DataFrame(list(rows))
-    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    #df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
@@ -411,7 +411,7 @@ def create_fullotchet_podryad():
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
+            #worksheet.set_column('B:B', 20, cell_fromat)
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             workbook.close()
@@ -430,6 +430,7 @@ def create_fullotchet_podryad():
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
             ten_days_ago = today - datetime.timedelta(days=10)
+            df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
             filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
             filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
             filtered_counts = filtered_df.groupby('Наименование подсистемы/компонента')[
@@ -458,7 +459,7 @@ def create_fullotchet_podryad():
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
+            #worksheet.set_column('B:B', None, cell_fromat)
             worksheet.set_column('I:I', 70, wrap_format)
             worksheet.set_column('O:O', 70, wrap_format)
             worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
