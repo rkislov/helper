@@ -169,100 +169,7 @@ def create_fullotchet():
     df['Описание оказанной консультации или решения по обращению'] = df['Описание оказанной консультации или решения по обращению'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
     df['Описание оказанной консультации или решения по обращению'] = df['Описание оказанной консультации или решения по обращению'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
 
-    topics = Topic.objects.all()
 
-    for topic in topics:
-
-        filename = f"{topic.slug}-{date}.xlsx"
-        subject = f"{topic.slug}-{date}"
-        path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
-        if topic.slug == 'all':
-            print(df)
-            print(len(df.columns))
-            print(len(df))
-
-            writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            df.index += 1
-            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1,0))
-            workbook = writer.book
-
-            worksheet = writer.sheets['Заявки']
-
-            for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
-                worksheet.set_row(i, height)
-
-            cell_fromat = workbook.add_format({
-                "align": "left",
-                "valign": "top",
-            })
-            worksheet.set_column(0, len(df.columns), None, cell_fromat)
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
-            worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
-            workbook.close()
-        else:
-            services = []
-            iterservices = topic.services.all()
-            for item in iterservices:
-                services.append(item.name)
-            servis_df = df.loc[df['Наименование подсистемы/компонента'].isin(services)]
-            print(servis_df)
-            print(len(servis_df.columns))
-            print(len(servis_df))
-            counts = servis_df.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame(name='Всего')
-            #servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
-            today = datetime.datetime.now().date()
-            five_days_ago = today - datetime.timedelta(days=5)
-            ten_days_ago = today - datetime.timedelta(days=10)
-            filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
-            filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
-            filtered_counts = filtered_df.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame()
-            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame()
-            print(counts)
-            counts['5 дней'] = filtered_counts
-            counts['10 дней'] = filtered_counts_10
-            print(counts)
-            writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            servis_df.index += 1
-            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1,0))
-            counts.to_excel(writer, sheet_name='Статистика')
-            workbook = writer.book
-            worksheet = writer.sheets['Заявки']
-            for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
-                worksheet.set_row(i, height)
-
-            cell_fromat = workbook.add_format({
-                "align": "left",
-                "valign": "top",
-            })
-            worksheet.set_column(0, len(servis_df.columns), None, cell_fromat)
-            worksheet.autofit()
-            worksheet.freeze_panes(1, 0)
-            worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
-            worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
-            worksheet2 = writer.sheets['Статистика']
-            worksheet2.autofit()
-            workbook.close()
-
-
-
-        emails = []
-        iteremails = topic.recivers.all()
-        print(iteremails[0])
-        for email in iteremails:
-            emails.append(email.email)
-        print(emails)
-        print(filename)
-
-        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
 
     dropfields = ['Инициатор (фамилия и инициалы)',
           'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time', 'exec_time', 'close_date', 'Оценка',
@@ -400,6 +307,176 @@ E-mail: service-manager@cifro.tech
         print(filename)
 
         send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message2, filename)
+
+
+def create_fullotchet_podryad():
+    connect = psycopg2.connect(host=os.getenv("DBE_HOST"), user=os.getenv("DBE_USER"),
+                               password=os.getenv("DBE_PASSWORD"), dbname=os.getenv("DBE_NAME"),
+                               port=os.getenv("DBE_PORT"))
+
+    date = datetime.date.today()
+    time = datetime.time(18, 00)
+    date_for_otchet = datetime.datetime.combine(date, time)
+    date_for_otchet2 = f"'{date_for_otchet}'"
+    message = f"""Добрый день, коллеги!
+
+Во вложении общий отчёт по заявкам, которые идут в отчёт заказчику.
+Период от: 2023-05-16 00:00:00
+Период до: {date_for_otchet}
+
+Отчёт составлен автоматически.
+Вопросы по отчёту - taras.demchenko@rt.ru
+     """
+    print(date)
+    print(date_for_otchet)
+    print(date_for_otchet2)
+    cursor = connect.cursor()
+    sql = f"""
+       SELECT  
+     * 
+    FROM  
+     report.v_try_source_v3 t 
+
+    WHERE   
+     t.visibility = 'visible' 
+     AND t.create_time >= '2023-05-16 00:00:00'  
+     AND t.create_time <= {date_for_otchet2}
+
+        LIMIT 30000
+    """
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    print(rows[0])
+    print("Total rows are:  ", len(rows))
+
+    fields = ['Дата поступления', 'Время поступления', 'Способ подачи обращения', 'Номер обращения',
+              'Заявитель (фамилия и инициалы)',
+              'Название субъекта РФ', 'Номер СТД (КСА)', 'Текст обращения', 'Классификация обращения',
+              'Приоритет обращения',
+              'Наименование подсистемы/компонента', 'Исполнитель обращения (фамилия и инициалы)', 'Текущий статус',
+              'Описание оказанной консультации или решения по обращению', 'Необходимость модификации СПО (да/нет)',
+              'Номер листа внимания', 'Дата закрытия', 'Время закрытия', 'Общее время обработки',
+              'Инициатор (фамилия и инициалы)',
+              'Компания инициатора', 'Массовый инцидент', 'tid', 'service_id', 'ticket_state_id', 'create_time',
+              'exec_time', 'close_date', 'Оценка',
+              'status', 'service', 'queue', 'SLA norm', 'SLA fact', 'Нарушение SLA', 'время: Зарегистрирована',
+              'время: В работе', 'время: Отложенное исполнение',
+              'время: Ожидание клиента', 'время: На согласовании', 'visibility', 'region']
+
+    fields2 = ['Статус', 'Количество']
+
+    df = pd.DataFrame(list(rows), columns=fields)
+    # df = pd.DataFrame(list(rows))
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
+    df['Текст обращения'] = df['Текст обращения'].str.replace(
+        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+    df['Текст обращения'] = df['Текст обращения'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace('\n', ' ')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace(
+        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
+
+    topics = Topic.objects.all()
+
+    for topic in topics:
+
+        filename = f"{topic.slug}-{date}.xlsx"
+        subject = f"{topic.slug}-{date}"
+        path = os.path.relpath(os.path.join(django_settings.STATIC_ROOT, f'{filename}'))
+        if topic.slug == 'all':
+            print(df)
+            print(len(df.columns))
+            print(len(df))
+
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            df.index += 1
+            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
+            workbook = writer.book
+
+            worksheet = writer.sheets['Заявки']
+
+            for i, height in enumerate([25] * df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
+            cell_fromat = workbook.add_format({
+                "align": "left",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
+            wrap_format = workbook.add_format({'text_wrap': True})
+            worksheet.set_column('B:B', None, cell_fromat)
+            worksheet.set_column('I:I', 70, wrap_format)
+            worksheet.set_column('O:O', 70, wrap_format)
+            workbook.close()
+        else:
+            services = []
+            iterservices = topic.services.all()
+            for item in iterservices:
+                services.append(item.name)
+            servis_df = df.loc[df['Наименование подсистемы/компонента'].isin(services)]
+            print(servis_df)
+            print(len(servis_df.columns))
+            print(len(servis_df))
+            counts = servis_df.groupby('Наименование подсистемы/компонента')['Текущий статус'].value_counts().to_frame(
+                name='Всего')
+            # servis_df['Дата поступления'] = pd.to_datetime(servis_df['Дата поступления'], format='%d.%m.%Y')
+            today = datetime.datetime.now().date()
+            five_days_ago = today - datetime.timedelta(days=5)
+            ten_days_ago = today - datetime.timedelta(days=10)
+            filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
+            filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
+            filtered_counts = filtered_df.groupby('Наименование подсистемы/компонента')[
+                'Текущий статус'].value_counts().to_frame()
+            filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы/компонента')[
+                'Текущий статус'].value_counts().to_frame()
+            print(counts)
+            counts['5 дней'] = filtered_counts
+            counts['10 дней'] = filtered_counts_10
+            print(counts)
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            servis_df.index += 1
+            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
+            counts.to_excel(writer, sheet_name='Статистика')
+            workbook = writer.book
+            worksheet = writer.sheets['Заявки']
+            for i, height in enumerate([25] * servis_df.shape[0]):  # устанавливаем высоту строк
+                worksheet.set_row(i, height)
+
+            cell_fromat = workbook.add_format({
+                "align": "left",
+                "valign": "top",
+            })
+            worksheet.set_column(0, len(servis_df.columns), None, cell_fromat)
+            worksheet.autofit()
+            worksheet.freeze_panes(1, 0)
+            worksheet.autofilter(0, 1, len(df), len(df.columns))
+            wrap_format = workbook.add_format({'text_wrap': True})
+            worksheet.set_column('B:B', None, cell_fromat)
+            worksheet.set_column('I:I', 70, wrap_format)
+            worksheet.set_column('O:O', 70, wrap_format)
+            worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
+            worksheet2 = writer.sheets['Статистика']
+            worksheet2.autofit()
+            workbook.close()
+
+        emails = []
+        iteremails = topic.recivers.all()
+        print(iteremails[0])
+        for email in iteremails:
+            emails.append(email.email)
+        print(emails)
+        print(filename)
+
+        send_otchet_email_task.delay(emails, subject, 'post@cifro.tech', message, filename)
+
+
 
 
 def todb():
