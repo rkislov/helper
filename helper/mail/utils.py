@@ -379,7 +379,8 @@ def create_fullotchet_podryad():
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
     df['Описание оказанной консультации или решения по обращению'] = df[
         'Описание оказанной консультации или решения по обращению'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
-
+    prefiltereddf = df
+    prefiltereddf['Дата поступления'] = pd.to_datetime(prefiltereddf['Дата поступления'], format='%d.%m.%Y').dt.date
     topics = Topic.objects.all()
 
     for topic in topics:
@@ -430,9 +431,8 @@ def create_fullotchet_podryad():
             today = datetime.datetime.now().date()
             five_days_ago = today - datetime.timedelta(days=5)
             ten_days_ago = today - datetime.timedelta(days=10)
-            df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
-            filtered_df = servis_df[df['Дата поступления'] < five_days_ago]
-            filtered_df_10 = servis_df[df['Дата поступления'] < ten_days_ago]
+            filtered_df = servis_df[prefiltereddf['Дата поступления'] < five_days_ago]
+            filtered_df_10 = servis_df[prefiltereddf['Дата поступления'] < ten_days_ago]
             filtered_counts = filtered_df.groupby('Наименование подсистемы/компонента')[
                 'Текущий статус'].value_counts().to_frame()
             filtered_counts_10 = filtered_df_10.groupby('Наименование подсистемы/компонента')[
