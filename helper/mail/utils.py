@@ -298,7 +298,7 @@ E-mail: service-manager@cifro.tech
         emails = []
         fciiteremails = fcitopic.fcirecivers.all()
         iiteremails = fcitopic.recivers.all()
-        print(iteremails[0])
+        print(iiteremails[0])
         for email in fciiteremails:
             emails.append(email.email)
         for email in iiteremails:
