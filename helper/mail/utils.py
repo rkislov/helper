@@ -338,7 +338,7 @@ def create_fullotchet_podryad():
      report.v_try_source_v3 t 
 
     WHERE   
-     t.visibility = 'hidden' 
+     t.visibility <> 'hidden' 
      AND t.create_time >= '2023-05-16 00:00:00'  
      AND t.create_time <= {date_for_otchet2}
 
