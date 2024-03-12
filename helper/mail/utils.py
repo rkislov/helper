@@ -162,6 +162,11 @@ def create_fullotchet():
     df = pd.DataFrame(list(rows), columns=fields)
     #df = pd.DataFrame(list(rows))
     #df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.date
+    df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
+    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.date
+    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.date
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
@@ -234,9 +239,10 @@ E-mail: service-manager@cifro.tech
                     r_number = f'{i}'
                 #r_number = f'{i}'
                 print(r_number)
-                fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
+                new_fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
+                fci_servis_df_region = new_fci_servis_df_region.copy()
                 fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
-                #fci_servis_df_region_execl.index += 1
+                fci_servis_df_region_execl.index += 1
                 fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1,0))
                 worksheet = writer.sheets[r_number]
 
@@ -367,7 +373,11 @@ def create_fullotchet_podryad():
 
     df = pd.DataFrame(list(rows), columns=fields)
     # df = pd.DataFrame(list(rows))
-    #df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.date
+    df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
+    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.date
+    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.date
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
@@ -380,7 +390,7 @@ def create_fullotchet_podryad():
     df['Описание оказанной консультации или решения по обращению'] = df[
         'Описание оказанной консультации или решения по обращению'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
     prefiltereddf = df.copy()
-    prefiltereddf['Дата поступления'] = pd.to_datetime(prefiltereddf['Дата поступления'], format='%d.%m.%Y').dt.date
+    #prefiltereddf['Дата поступления'] = pd.to_datetime(prefiltereddf['Дата поступления'], format='%d.%m.%Y').dt.date
     topics = Topic.objects.all()
 
     for topic in topics:
@@ -421,7 +431,8 @@ def create_fullotchet_podryad():
             iterservices = topic.services.all()
             for item in iterservices:
                 services.append(item.name)
-            servis_df = df.loc[df['Наименование подсистемы/компонента'].isin(services)]
+            new_servis_df = df.loc[df['Наименование подсистемы/компонента'].isin(services)]
+            servis_df = new_servis_df.copy()
             print(servis_df)
             print(len(servis_df.columns))
             print(len(servis_df))
@@ -530,6 +541,22 @@ def todb():
     df = pd.DataFrame(list(rows), columns=fields)
     print(df.head())
     print(df.tail())
+    df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
+    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.date
+    df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
+    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.date
+    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.date
+    df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
+    df['Текст обращения'] = df['Текст обращения'].str.replace(
+        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+    df['Текст обращения'] = df['Текст обращения'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace('\n', ' ')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace(
+        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
+    df['Описание оказанной консультации или решения по обращению'] = df[
+        'Описание оказанной консультации или решения по обращению'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
     newdf = df[df['create_time'] >= '2023-12-14 00:00:00']
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], dayfirst=True)
     print(newdf.head())
