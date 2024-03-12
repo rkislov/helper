@@ -374,10 +374,10 @@ def create_fullotchet_podryad():
     df = pd.DataFrame(list(rows), columns=fields)
     # df = pd.DataFrame(list(rows))
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
-    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.date
+    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.time
     df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
-    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.date
-    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.date
+    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.time
+    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.time
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
@@ -542,10 +542,10 @@ def todb():
     print(df.head())
     print(df.tail())
     df['Дата поступления'] = pd.to_datetime(df['Дата поступления'], format='%d.%m.%Y').dt.date
-    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.date
+    df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H.%M.%S').dt.time
     df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
-    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.date
-    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.date
+    df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H.%M.%S').dt.time
+    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H.%M.%S').dt.time
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
