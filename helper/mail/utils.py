@@ -166,7 +166,7 @@ def create_fullotchet():
     df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H:%M:%S').dt.time
     df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
     df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H:%M:%S').dt.time
-    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H:%M:%S').dt.time
+    #df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H:%M:%S').dt.time
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(r"[\"\'\|\?\=\.\@\#\*\,]", '')
@@ -377,7 +377,7 @@ def create_fullotchet_podryad():
     df['Время поступления'] = pd.to_datetime(df['Время поступления'], format='%H:%M:%S').dt.time
     df['Дата закрытия'] = pd.to_datetime(df['Дата закрытия'], format='%d.%m.%Y').dt.date
     df['Время закрытия'] = pd.to_datetime(df['Время закрытия'], format='%H:%M:%S').dt.time
-    df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H:%M:%S').dt.time
+    #df['Общее время обработки'] = pd.to_datetime(df['Общее время обработки'], format='%H:%M:%S').dt.time
     df['Текст обращения'] = df['Текст обращения'].str.replace('\n', ' ')
     df['Текст обращения'] = df['Текст обращения'].str.replace(
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ' ')
