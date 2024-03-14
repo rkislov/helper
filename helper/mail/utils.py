@@ -220,14 +220,14 @@ E-mail: service-manager@cifro.tech
                 "valign": "top",
                 'text_wrap': True,
             })
+            worksheet.set_column('I:I', 70, None)
+            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df_to_fci_region_execl.columns), None, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             #wrap_format = workbook.add_format({'text_wrap': True})
             #worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, None)
-            worksheet.set_column('O:O', 70, None)
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
             workbook.close()
         elif fcitopic.slug == 'region':
@@ -253,15 +253,17 @@ E-mail: service-manager@cifro.tech
                 cell_fromat = workbook.add_format({
                     "align": "left",
                     "valign": "top",
+                    'text_wrap': True
                 })
+                worksheet.set_column('I:I', 70, None)
+                worksheet.set_column('O:O', 70, None)
                 worksheet.set_column(0, len(fci_servis_df_region_execl.columns), None, cell_fromat)
                 worksheet.autofit()
                 worksheet.freeze_panes(1, 0)
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
-                wrap_format = workbook.add_format({'text_wrap': True})
+                #wrap_format = workbook.add_format({)}
                 #worksheet.set_column('B:B', None, cell_fromat)
-                worksheet.set_column('I:I', 70, wrap_format)
-                worksheet.set_column('O:O', 70, wrap_format)
+
 
 
             workbook.close()
@@ -290,15 +292,16 @@ E-mail: service-manager@cifro.tech
             cell_fromat = workbook.add_format({
                 "align": "left",
                 "valign": "top",
+                'text_wrap': True
             })
+            worksheet.set_column('I:I', 70, None)
+            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
+            #wrap_format = workbook.add_format({})
             #worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
 
             workbook.close()
@@ -418,15 +421,16 @@ def create_fullotchet_podryad():
             cell_fromat = workbook.add_format({
                 "align": "left",
                 "valign": "top",
+                'text_wrap': True,
             })
+            worksheet.set_column('I:I', 70, None)
+            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
+            wrap_format = workbook.add_format()
             #worksheet.set_column('B:B', 20, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
             workbook.close()
         else:
             services = []
@@ -466,15 +470,16 @@ def create_fullotchet_podryad():
             cell_fromat = workbook.add_format({
                 "align": "left",
                 "valign": "top",
+                'text_wrap': True,
             })
+            worksheet.set_column('I:I', 70, None)
+            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(servis_df.columns), None, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
+            wrap_format = workbook.add_format({})
             #worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
             worksheet.autofilter(0, 1, len(servis_df), len(servis_df.columns))
             worksheet2 = writer.sheets['Статистика']
             worksheet2.autofit()
