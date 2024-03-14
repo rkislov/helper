@@ -272,11 +272,11 @@ E-mail: service-manager@cifro.tech
                 fciservices.append(item.name)
             print(fciservices)
             new_fci_servis_df = df_to_fci.loc[df['Наименование подсистемы/компонента'].isin(fciservices)]
+            fci_servis_df = new_fci_servis_df.copy()
             print(fci_servis_df)
             print(len(fci_servis_df.columns))
             print(len(fci_servis_df))
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            fci_servis_df = new_fci_servis_df.copy()
             fci_servis_df.index += 1
             df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
             df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
