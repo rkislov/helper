@@ -206,7 +206,7 @@ E-mail: service-manager@cifro.tech
             print(len(df_to_fci.columns))
             print(len(df_to_fci))
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
-            #df_to_fci.index += 1
+            df_to_fci.index += 1
             df_to_fci_region_execl = df_to_fci.drop(columns=['region'])
             df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
             workbook = writer.book
@@ -218,15 +218,16 @@ E-mail: service-manager@cifro.tech
             cell_fromat = workbook.add_format({
                 "align": "left",
                 "valign": "top",
+                'text_wrap': True,
             })
             worksheet.set_column(0, len(df_to_fci_region_execl.columns), None, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
-            wrap_format = workbook.add_format({'text_wrap': True})
-            worksheet.set_column('B:B', None, cell_fromat)
-            worksheet.set_column('I:I', 70, wrap_format)
-            worksheet.set_column('O:O', 70, wrap_format)
+            #wrap_format = workbook.add_format({'text_wrap': True})
+            #worksheet.set_column('B:B', None, cell_fromat)
+            worksheet.set_column('I:I', 70, None)
+            worksheet.set_column('O:O', 70, None)
             worksheet.autofilter(0, 1, len(df_to_fci_region_execl), len(df_to_fci_region_execl.columns))
             workbook.close()
         elif fcitopic.slug == 'region':
