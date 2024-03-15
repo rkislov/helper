@@ -220,9 +220,9 @@ E-mail: service-manager@cifro.tech
                 "valign": "top",
                 'text_wrap': True,
             })
-            worksheet.set_column('I:I', 70, None)
-            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df_to_fci_region_execl.columns), None, cell_fromat)
+            worksheet.set_column('I:I', 70, cell_fromat)
+            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
@@ -255,9 +255,9 @@ E-mail: service-manager@cifro.tech
                     "valign": "top",
                     'text_wrap': True
                 })
-                worksheet.set_column('I:I', 70, None)
-                worksheet.set_column('O:O', 70, None)
                 worksheet.set_column(0, len(fci_servis_df_region_execl.columns), None, cell_fromat)
+                worksheet.set_column('I:I', 70, cell_fromat)
+                worksheet.set_column('O:O', 70, cell_fromat)
                 worksheet.autofit()
                 worksheet.freeze_panes(1, 0)
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
@@ -294,9 +294,9 @@ E-mail: service-manager@cifro.tech
                 "valign": "top",
                 'text_wrap': True
             })
-            worksheet.set_column('I:I', 70, None)
-            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.set_column('I:I', 70, cell_fromat)
+            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
@@ -423,9 +423,9 @@ def create_fullotchet_podryad():
                 "valign": "top",
                 'text_wrap': True,
             })
-            worksheet.set_column('I:I', 70, None)
-            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
+            worksheet.set_column('I:I', 70, cell_fromat)
+            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
@@ -472,9 +472,9 @@ def create_fullotchet_podryad():
                 "valign": "top",
                 'text_wrap': True,
             })
-            worksheet.set_column('I:I', 70, None)
-            worksheet.set_column('O:O', 70, None)
             worksheet.set_column(0, len(servis_df.columns), None, cell_fromat)
+            worksheet.set_column('I:I', 70, cell_fromat)
+            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
