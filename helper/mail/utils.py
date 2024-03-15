@@ -224,6 +224,8 @@ E-mail: service-manager@cifro.tech
             worksheet.autofit()
             worksheet.set_column('I:I', 70, cell_fromat)
             worksheet.set_column('O:O', 70, cell_fromat)
+            worksheet.set_column('I:I', cell_fromat)
+            worksheet.set_column('O:O', cell_fromat)
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             #wrap_format = workbook.add_format({'text_wrap': True})
@@ -258,8 +260,10 @@ E-mail: service-manager@cifro.tech
                 })
                 worksheet.set_column(0, len(fci_servis_df_region_execl.columns), None, cell_fromat)
                 worksheet.autofit()
-                worksheet.set_column('I:I', 70, cell_fromat)
-                worksheet.set_column('O:O', 70, cell_fromat)
+                worksheet.set_column('I:I', 70)
+                worksheet.set_column('O:O', 70)
+                worksheet.set_column('I:I', cell_fromat)
+                worksheet.set_column('O:O', cell_fromat)
                 worksheet.freeze_panes(1, 0)
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
                 #wrap_format = workbook.add_format({)}
@@ -284,7 +288,7 @@ E-mail: service-manager@cifro.tech
             fci_servis_df.reset_index(drop=True, inplace=True)
             fci_servis_df.index += 1
             df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0), date_format=None, datetime_format=None)
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
 
@@ -297,9 +301,11 @@ E-mail: service-manager@cifro.tech
                 'text_wrap': True
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
-            worksheet.set_column('I:I', 70, cell_fromat)
-            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
+            worksheet.set_column('I:I', 70)
+            worksheet.set_column('O:O', 70)
+            worksheet.set_column('I:I', cell_fromat)
+            worksheet.set_column('O:O', cell_fromat)
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             #wrap_format = workbook.add_format({})
@@ -412,7 +418,7 @@ def create_fullotchet_podryad():
 
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df.index += 1
-            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
+            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0) , date_format=None, datetime_format=None)
             workbook = writer.book
 
             worksheet = writer.sheets['Заявки']
@@ -426,9 +432,11 @@ def create_fullotchet_podryad():
                 'text_wrap': True,
             })
             worksheet.set_column(0, len(df.columns), None, cell_fromat)
-            worksheet.set_column('I:I', 70, cell_fromat)
-            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
+            worksheet.set_column('I:I', 70)
+            worksheet.set_column('O:O', 70)
+            worksheet.set_column('I:I', cell_fromat)
+            worksheet.set_column('O:O', cell_fromat)
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format()
@@ -462,7 +470,7 @@ def create_fullotchet_podryad():
             print(counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             servis_df.index += 1
-            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
+            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
             counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
@@ -475,9 +483,11 @@ def create_fullotchet_podryad():
                 'text_wrap': True,
             })
             worksheet.set_column(0, len(servis_df.columns), None, cell_fromat)
-            worksheet.set_column('I:I', 70, cell_fromat)
-            worksheet.set_column('O:O', 70, cell_fromat)
             worksheet.autofit()
+            worksheet.set_column('I:I', 70)
+            worksheet.set_column('O:O', 70)
+            worksheet.set_column('I:I', cell_fromat)
+            worksheet.set_column('O:O', cell_fromat)
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             wrap_format = workbook.add_format({})
