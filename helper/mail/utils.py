@@ -208,7 +208,7 @@ E-mail: service-manager@cifro.tech
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df_to_fci.index += 1
             df_to_fci_region_execl = df_to_fci.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
 
@@ -221,9 +221,9 @@ E-mail: service-manager@cifro.tech
                 'text_wrap': True,
             })
             worksheet.set_column(0, len(df_to_fci_region_execl.columns), None, cell_fromat)
+            worksheet.autofit()
             worksheet.set_column('I:I', 70, cell_fromat)
             worksheet.set_column('O:O', 70, cell_fromat)
-            worksheet.autofit()
             worksheet.freeze_panes(1, 0)
             worksheet.autofilter(0, 1, len(df), len(df.columns))
             #wrap_format = workbook.add_format({'text_wrap': True})
@@ -245,7 +245,7 @@ E-mail: service-manager@cifro.tech
                 fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                 fci_servis_df_region_execl.reset_index(drop=True, inplace=True)
                 fci_servis_df_region_execl.index += 1
-                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1,0))
+                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
                 worksheet = writer.sheets[r_number]
 
                 for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
@@ -257,9 +257,9 @@ E-mail: service-manager@cifro.tech
                     'text_wrap': True
                 })
                 worksheet.set_column(0, len(fci_servis_df_region_execl.columns), None, cell_fromat)
+                worksheet.autofit()
                 worksheet.set_column('I:I', 70, cell_fromat)
                 worksheet.set_column('O:O', 70, cell_fromat)
-                worksheet.autofit()
                 worksheet.freeze_panes(1, 0)
                 worksheet.autofilter(0, 1, len(fci_servis_df_region_execl), len(fci_servis_df_region_execl.columns))
                 #wrap_format = workbook.add_format({)}
