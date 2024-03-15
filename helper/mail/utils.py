@@ -243,6 +243,7 @@ E-mail: service-manager@cifro.tech
                 new_fci_servis_df_region = df_to_fci.loc[df_to_fci['region'] == r_number]
                 fci_servis_df_region = new_fci_servis_df_region.copy()
                 fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
+                fci_servis_df_region_execl.reset_index(drop=True, inplace=True)
                 fci_servis_df_region_execl.index += 1
                 fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1,0))
                 worksheet = writer.sheets[r_number]
@@ -280,6 +281,7 @@ E-mail: service-manager@cifro.tech
             print(len(fci_servis_df.columns))
             print(len(fci_servis_df))
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            fci_servis_df.reset_index(drop=True, inplace=True)
             fci_servis_df.index += 1
             df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
             df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
@@ -582,4 +584,16 @@ def todb():
     print(df.head())
     #df.to_sql('tickets', con=engine, if_exists='replace', index=False)
 
+def test_index():
+    df = pd.DataFrame({'A': [1, 2, 3, 4, 5], 'B': ['a', 'b', 'c', 'd', 'e']})
 
+    # делим датафрейм на части с помощью loc
+    part1 = df.loc[0:2]
+    part2 = df.loc[3:4]
+
+    # сбрасываем индексы каждой части
+    part1.reset_index(drop=True, inplace=True)
+    part2.reset_index(drop=True, inplace=True)
+
+    print(part1)
+    print(part2)
