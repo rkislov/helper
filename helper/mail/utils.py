@@ -208,7 +208,7 @@ E-mail: service-manager@cifro.tech
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df_to_fci.index += 1
             df_to_fci_region_execl = df_to_fci.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1, 0))
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
 
@@ -247,7 +247,7 @@ E-mail: service-manager@cifro.tech
                 fci_servis_df_region_execl = fci_servis_df_region.drop(columns=['region'])
                 fci_servis_df_region_execl.reset_index(drop=True, inplace=True)
                 fci_servis_df_region_execl.index += 1
-                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
+                fci_servis_df_region_execl.to_excel(writer, sheet_name=r_number, index=True, index_label='№ п/п', freeze_panes=(1, 0))
                 worksheet = writer.sheets[r_number]
 
                 for i, height in enumerate([25] * fci_servis_df_region_execl.shape[0]):  # устанавливаем высоту строк
@@ -288,7 +288,7 @@ E-mail: service-manager@cifro.tech
             fci_servis_df.reset_index(drop=True, inplace=True)
             fci_servis_df.index += 1
             df_to_fci_region_execl = fci_servis_df.drop(columns=['region'])
-            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0), date_format=None, datetime_format=None)
+            df_to_fci_region_execl.to_excel(writer, sheet_name='Обращения', index=True, index_label='№ п/п', freeze_panes=(1,0))
             workbook = writer.book
             worksheet = writer.sheets['Обращения']
 
@@ -418,7 +418,7 @@ def create_fullotchet_podryad():
 
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
             df.index += 1
-            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0) , date_format=None, datetime_format=None)
+            df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
             workbook = writer.book
 
             worksheet = writer.sheets['Заявки']
@@ -469,8 +469,9 @@ def create_fullotchet_podryad():
             counts['10 дней'] = filtered_counts_10
             print(counts)
             writer = pd.ExcelWriter(path, engine='xlsxwriter')
+            servis_df.reset_index(drop=True, inplace=True)
             servis_df.index += 1
-            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0), date_format=None, datetime_format=None)
+            servis_df.to_excel(writer, sheet_name='Заявки', index=True, index_label='№ п/п', freeze_panes=(1, 0))
             counts.to_excel(writer, sheet_name='Статистика')
             workbook = writer.book
             worksheet = writer.sheets['Заявки']
